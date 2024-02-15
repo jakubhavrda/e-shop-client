@@ -11,9 +11,7 @@ body{
     background-color:#fff;
 }
 
-#root{
-    text-align: center;
-}
+
 
 .content-img{
     width: 100%;
@@ -29,23 +27,24 @@ body{
     margin-left: 0.6rem;
 }
 
-.basket-icon {
+.profile-icon{
+    float: right;
     position: absolute;
-    right: 4.6rem;
-    justify-content: flex-end;
+    right: 0px;
 }
 
-.profile-icon {
-    position: absolute;
-    right: 1rem;
-    justify-content: flex-end;
+.icon{
+    display: inline;
 }
 
-.parent{
-    display: flex;
-    justify-content: center;
-    margin: 2rem;
+.parent {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    align-items: center;
+    margin-left: 4rem;
 }
+
+
 
 .card{
     border: 0.1rem solid rgb(197, 197, 197);
@@ -90,19 +89,32 @@ a {
     z-index: 1;
 }
 
-.loginDiv{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin-bottom: 10rem;
+
+.shopImg {
+    border: solid black 1x;
+    border-radius: 3rem;
+    width: 500px;
+    
 }
 
-.loginDiv > form{
-    border-radius: 2rem;
-    width: 30%;
-    border: solid 1px ;
-    padding: 1rem;
-    margin: 8rem 0 3rem 0; 
+.userData{
+    border: solid black 1px;
+
+    border-radius: 3rem;
+    width: 500px;
+    
+}
+
+#prevOrders{
+    border: solid black 1px;
+    border-radius: 3rem;
+    margin: 7rem;
+    width: 82%;
+}
+
+.grid-profile{
+    display: flex;
+    gap: 2rem;
+    margin: 0 7rem;
 }
 
