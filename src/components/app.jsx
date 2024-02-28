@@ -10,6 +10,7 @@ import SingleItemPage from "./pages/SingleItemPage";
 import LoginPage from "./pages/LoginPage";
 import Register from "./pages/Register";
 import ProfilePage from "./pages/ProfilePage";
+import OrdersPage from "./pages/OrdersPage";
 
 
 
@@ -24,7 +25,13 @@ const App = () => {
     });
 
     const [admin, setAdmin] = useState(false);
+
+    const [order, setOrder] = useState([]);
     
+    const addToCart = (order) => {
+      setOrder(prevArray => [...prevArray, order]);
+    };
+
     const setAuth = (boolean) => {
         setIsAuthenticated(boolean)
     };
@@ -61,12 +68,16 @@ const App = () => {
           } catch (err) {
               console.error(err.message);
           }
-      };  
+      };
+
+
+
+
     
       useEffect(() => {
         isAuth();
         getUser();
-        isAuth()
+        isAuth();
       }, []);
     
     return(
@@ -75,7 +86,8 @@ const App = () => {
                 <Route exact path="/" element={<HomePage user={user}/>} />
                 <Route exact path="/admin/create" element={admin ? <AdminPage user={user}/> : <NotFoundPage />}/>
                 <Route exact path="/discover" element={<DiscoverPage user={user} />} />
-                <Route exact path="/discover/:category/:itemId" element={<SingleItemPage user={user}/>} />
+                <Route exact path="/discover/:category/:itemId" element={<SingleItemPage user={user} order={addToCart}/>} />
+                <Route exact path="/order/:order_id" element={<OrdersPage />} />
                 <Route path="*" element={<NotFoundPage />} />
 
                 <Route exact path="/login" element={ !isAuthenticated ? <LoginPage setAuth={setAuth} /> : <Navigate to="/profile" /> } />

@@ -4,15 +4,18 @@ import Navbar from "../navbar";
 
 
 
-function SingleItemPage({user}) {
-
+function SingleItemPage(props) {
+    const user = props.user;
     return (
         <Fragment>  
                 <Navbar user={user}/> 
-                <OneItem />   
+                <OneItem order={props.order}/>   
         </Fragment>
         
     )
 };
 
 export default SingleItemPage;
+
+
+

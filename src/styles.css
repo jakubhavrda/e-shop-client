@@ -11,10 +11,13 @@ body{
     background-color:#fff;
 }
 
-
+input{
+    height: 2.5rem;
+}
 
 .content-img{
     width: 100%;
+    margin-top: -1.2rem;
 }
 
 .navbar-nav{
@@ -91,30 +94,24 @@ a {
 
 
 .shopImg {
-    border: solid black 1x;
     border-radius: 3rem;
     width: 500px;
-    
+}
+
+.grid-profile-child{
+    border-radius: 3rem;
+    height: 500px;
 }
 
 .userData{
-    border: solid black 1px;
-
-    border-radius: 3rem;
-    width: 500px;
-    
+    background-color: #D7E4C0;
 }
 
-#prevOrders{
-    border: solid black 1px;
-    border-radius: 3rem;
-    margin: 7rem;
-    width: 82%;
-}
 
 .grid-profile{
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 500px));
     gap: 2rem;
-    margin: 0 7rem;
+    justify-content: center;
 }
 

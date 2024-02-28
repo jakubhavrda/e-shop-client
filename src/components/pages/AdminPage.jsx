@@ -61,6 +61,7 @@ function AdminPage({user}) {
                         <br/>
                     <label className="form-label">Category:</label>
                     <select className="form-select border-success" aria-label="Select Category" value={category} onChange={e => setCategory(e.target.value)}>
+                            <option value="default">Default</option>
                         {categories.map((item) => (
                             <option key={item.ctgr_id} value={item.category}>{item.category}</option>
                           ))}

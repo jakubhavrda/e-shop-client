@@ -49,7 +49,8 @@ function ItemDiscover(props) {
     
     return (
         <Fragment>
-            <div hidden={!hidden} style={{margin: "0 2rem",  display: "flex", flexWrap: "wrap"}}>
+            
+            <div hidden={!hidden} style={{margin: " 3rem 2rem",  display: "flex", flexWrap: "wrap", marginTop: "2rem"}}>
                 {query.map((item, index) => (
                     <Item 
                         id={item.id}

@@ -3,10 +3,12 @@ import { useParams } from "react-router-dom";
 
 
 
-function OneItem() {
+function OneItem(props) {
 
     const [item, setItem] = useState([]);
     const params = useParams();
+
+    
 
     const getSingleItem = async() => {
         const result = await fetch(`http://localhost:4000/discover/${params.category}/${params.itemId}`);
@@ -15,7 +17,7 @@ function OneItem() {
     };
 
     const addToCart = async() => {
-        console.log("Clicked");
+       props.order(item);
     };
 
 
