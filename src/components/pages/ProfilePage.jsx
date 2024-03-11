@@ -32,12 +32,11 @@ function ProfilePage ({setAuth}) {
            
            if(prevOrders.length === 0){
             getPrevOrders();
-           ;
            }
            
         } catch (err) {
             console.error(err.message);
-        }
+        };
     };
 
     function logout(e) {
@@ -58,8 +57,8 @@ function ProfilePage ({setAuth}) {
                     body: JSON.stringify({user_id})
                 });
                 const parseRes = await response.json()
-
-                if(parseRes.length > 0) {
+                console.log(parseRes);
+                if(parseRes) {
                     setHidden(true);
                     setPrevOrders(parseRes)
                 }else{
@@ -76,11 +75,11 @@ function ProfilePage ({setAuth}) {
 
     useEffect(() => {
         getUser();
-    });
+    }, []); // <-- dunno if array is needed
 
     return (
         <Fragment>
-            <a href="/discover"><img src={logo} className="mt-5" style={{width: "20rem" }} alt="&& logo"/></a>
+            <a href="/"><img src={logo} className="mt-5" style={{width: "20rem" }} alt="&& logo"/></a>
             
             <h1 className="my-5">Welcome, {name} !</h1>
             
@@ -88,14 +87,14 @@ function ProfilePage ({setAuth}) {
             <div className="grid-profile" >
                 <div className="userData grid-profile-child">
                     <h3 className="my-3">User Credentials</h3>
-                    <Link hidden={hiddenAdmin} className="text-danger mt-5" to="/admin/create">! Click here for Admin Page !</Link>
+                    <Link hidden={hiddenAdmin} className="text-danger mt-5" to="/admin">! Click here for Admin Page !</Link>
                     <h6 className="mt-3">user_name: <u className="text-primary">{name}</u></h6>
                     <h6>email: <u className="text-primary">{email}</u></h6>
                     
                     <button onClick={e => logout(e)} className="btn btn-outline-danger">Logout</button>
                 </div>
                 <div className="grid-profile-child">
-                    <a href="/discover"><img src={shopImg} alt="Click here to go shopping" className="shopImg"/></a>
+                    <a href="/"><img src={shopImg} alt="Click here to go shopping" className="shopImg"/></a>
                 </div>  
             </div>
             

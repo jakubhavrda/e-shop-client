@@ -20,6 +20,22 @@ function OneItem(props) {
        props.order(item);
     };
 
+    const createOrder = async(e) => {
+        e.preventDefault();
+        try {
+        const list_of_items = item; // <-- change the (item) to an array or sth!
+        const user_id = props.user.id;  
+        const body = {list_of_items, user_id};
+        const response = await fetch("http://localhost:4000/createOrder", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(body)
+          });
+        } catch (err) {
+          console.error(err.message);
+        }
+      };
+
 
 
 
@@ -39,7 +55,7 @@ function OneItem(props) {
                     </div>
                     <div style={{width: "40rem", display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "3rem", textAlign: "left"}}>
                         <p>{item.description}</p>
-                        <button className="btn btn-lg btn-success" onClick={addToCart}>Add to Cart</button>
+                        <button className="btn btn-lg btn-success" onClick={createOrder}>Add to Cart</button>
                     </div>
                 </div>      
 

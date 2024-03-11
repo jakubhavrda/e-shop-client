@@ -21,16 +21,31 @@ function OrdersPage() {
         getOrder();
     }, [])
     
-    console.log(order[0].paid);
+    console.log(order[0]);
 
     return (
         <Fragment>
-            <img src={logo} className="my-4" style={{width: "40%" }} alt="DAMP"/>
+            <a href="/"><img src={logo} className="my-4" style={{width: "40%" }} alt="DAMP"/></a>
             {order.map((x) => (
                 <div>
                     <h1>Order n.{x.order_id}</h1>
-                    <p>paid: {order.paid? "✔" : "❌"}</p>
-                    <p className="mb-5">complete: {order.complete? "✔" : "❌"}</p>
+                    <h4>Total: <span className="text-danger">{x.total_price}</span></h4>                    
+                    <p>paid: {x.paid? "✔" : "❌"}</p>
+                    <p className="mb-5">complete: {x.complete? "✔" : "❌"}</p>
+
+                    <div className="row justify-content-center">
+                         {x.list_of_items.map((y) => (
+                        <Item 
+                            id={y.id}   
+                            name={y.name}
+                            color={y.color}
+                            category={y.category}
+                            price={y.price}
+                            className="col-lg-6"
+                        />
+                    ))}
+                    </div>
+                   
                 </div>
                 
             ))}

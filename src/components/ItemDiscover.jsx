@@ -10,8 +10,6 @@ function ItemDiscover(props) {
     const [hidden, setHidden] = useState(false);
     const query = props.query;
 
-    console.log(query.length);
-    console.log(query);
     
     const checkQuery = () => {
         if(query.length > 0){

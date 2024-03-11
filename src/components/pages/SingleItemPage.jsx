@@ -8,8 +8,8 @@ function SingleItemPage(props) {
     const user = props.user;
     return (
         <Fragment>  
-                <Navbar user={user}/> 
-                <OneItem order={props.order}/>   
+                <Navbar user={user} order={props.order}/> 
+                <OneItem user={user} />   
         </Fragment>
         
     )

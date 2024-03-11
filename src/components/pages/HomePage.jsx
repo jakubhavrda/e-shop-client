@@ -4,7 +4,9 @@ import ListOfItems from "../listOfItems";
 import Searchbar from "../Searchbar";
 import ItemDiscover from "../ItemDiscover";
 
-function HomePage({user}) {
+function HomePage(props) {
+    const user = props.user;
+    const order = props.order;
 
     const [arrayQuery, setArrayQuery] = useState([]);
     const [hidden, setHidden] = useState(true);
@@ -27,7 +29,7 @@ function HomePage({user}) {
 
     return(
         <Fragment>
-            <Navbar user={user}/>
+            <Navbar user={user} order={order}/>
             <Searchbar user={user} getQuery={getQuery}/>
             <div hidden={hidden}>
                 <ItemDiscover query={arrayQuery}/>
