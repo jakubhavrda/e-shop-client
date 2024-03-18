@@ -29,13 +29,14 @@ function HomePage(props) {
 
     return(
         <Fragment>
-            <Navbar user={user} order={order}/>
+            <Navbar user={user} order={order} editOrder={props.editOrder}/>
             <Searchbar user={user} getQuery={getQuery}/>
             <div hidden={hidden}>
                 <ItemDiscover query={arrayQuery}/>
             </div>
             
             <ListOfItems />
+            <ItemDiscover query={[]}/>
         </Fragment>
     )
 };

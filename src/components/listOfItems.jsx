@@ -18,6 +18,7 @@ function ListOfItems(){
     }, []);
     return (
         <Fragment>
+        <br />
         <img className="content-img" src={logo} alt="logo of &&" />
         <br />
         <br />
@@ -31,6 +32,11 @@ function ListOfItems(){
                     category={item.category}
                     price={item.price}
                     color={item.color}
+                    amount={item.amount}
+                    hidden={true}
+                    width="18rem"
+                    height="26rem"
+                    imgHeight="18rem"
                     />
                 ))}   
             </div>

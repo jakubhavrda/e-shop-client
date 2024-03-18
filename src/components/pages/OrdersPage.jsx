@@ -3,7 +3,7 @@ import logo from "../../images/logo.png"
 import { useParams } from "react-router";
 import Item from "../item";
 
-function OrdersPage() {
+function OrdersPage(props) {
     const [order, setOrder] = useState([]);
     const params = useParams();
 
@@ -29,7 +29,7 @@ function OrdersPage() {
             {order.map((x) => (
                 <div>
                     <h1>Order n.{x.order_id}</h1>
-                    <h4>Total: <span className="text-danger">{x.total_price}</span></h4>                    
+                    <h4>Total: <span className="text-danger">{x.total_price} kč</span></h4>                    
                     <p>paid: {x.paid? "✔" : "❌"}</p>
                     <p className="mb-5">complete: {x.complete? "✔" : "❌"}</p>
 
@@ -41,7 +41,12 @@ function OrdersPage() {
                             color={y.color}
                             category={y.category}
                             price={y.price}
+                            amount={y.amount}
+                            editOrder={props.editOrder}
                             className="col-lg-6"
+                            width="18rem"
+                            height="26rem"
+                            imgHeight="18rem"
                         />
                     ))}
                     </div>

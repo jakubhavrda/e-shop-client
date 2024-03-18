@@ -3,61 +3,33 @@ import { Link } from "react-router-dom";
 import logo from "../../images/logo.png"
 import shopImg from "../../images/shop.png"
 
-function ProfilePage ({setAuth}) {
-    
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [user_id, setUserId] = useState("");
-
+function ProfilePage (props) {
+    const user = props.user;
+    console.log(user);
     const [prevOrders, setPrevOrders] = useState([]);
-
+    localStorage.getItem("token");
     const [hidden, setHidden] = useState(false);
-    const [hiddenAdmin, setHiddenAdmin] = useState(true)
 
-    const getUser = async() => {
-        try {
-           const response = await fetch("http://localhost:4000/dashboard/", {
-            method: "GET",
-            headers: { token: localStorage.token }
-           });
-           const parseRes = await response.json();
-           setName(parseRes.user_name);
-           setEmail(parseRes.user_email);
-           setUserId(parseRes.user_id);
-           if(parseRes.admin === true){
-            setHiddenAdmin(false);
-           } else {
-            setHiddenAdmin(true);
-           }
-           
-           if(prevOrders.length === 0){
-            getPrevOrders();
-           }
-           
-        } catch (err) {
-            console.error(err.message);
-        };
-    };
 
     function logout(e) {
         e.preventDefault();
         localStorage.removeItem("token");
-        setAuth(false);
+        props.setAuth(false);
     };
 
     const getPrevOrders =  async() => {
         try {
-            if(user_id == ""){
+            if(user.id === ""){
                 setHidden(false);
                 setPrevOrders([])
             } else {
+                const user_id = user.id
                 const response = await fetch("http://localhost:4000/usersOrders", {
                     method: "POST",
                     headers: {"Content-Type":"Application/json"},
                     body: JSON.stringify({user_id})
                 });
                 const parseRes = await response.json()
-                console.log(parseRes);
                 if(parseRes) {
                     setHidden(true);
                     setPrevOrders(parseRes)
@@ -74,22 +46,22 @@ function ProfilePage ({setAuth}) {
     };
 
     useEffect(() => {
-        getUser();
+        getPrevOrders();
     }, []); // <-- dunno if array is needed
 
     return (
         <Fragment>
             <a href="/"><img src={logo} className="mt-5" style={{width: "20rem" }} alt="&& logo"/></a>
             
-            <h1 className="my-5">Welcome, {name} !</h1>
+            <h1 className="my-5">Welcome, {user.name} !</h1>
             
 
             <div className="grid-profile" >
                 <div className="userData grid-profile-child">
                     <h3 className="my-3">User Credentials</h3>
-                    <Link hidden={hiddenAdmin} className="text-danger mt-5" to="/admin">! Click here for Admin Page !</Link>
-                    <h6 className="mt-3">user_name: <u className="text-primary">{name}</u></h6>
-                    <h6>email: <u className="text-primary">{email}</u></h6>
+                    <Link hidden={!props.admin} className="text-danger mt-5" to="/admin">! Click here for Admin Page !</Link>
+                    <h6 className="mt-3">user_name: <u className="text-primary">{user.name}</u></h6>
+                    <h6>email: <u className="text-primary">{user.email}</u></h6>
                     
                     <button onClick={e => logout(e)} className="btn btn-outline-danger">Logout</button>
                 </div>

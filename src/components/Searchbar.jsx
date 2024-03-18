@@ -70,7 +70,6 @@ function Searchbar(props){
             const params = e.target.value;
             const result = await fetch(`http://localhost:4000/searchbar/${params}`);
             const data = await result.json()
-            console.log(data);
             props.getQuery(data);
         } catch (err) {
             console.error(err);
@@ -102,7 +101,7 @@ function Searchbar(props){
                     <a href="/register"><p className="btn btn-lg btn-info">Register</p></a>
                 </div>
                 
-                <div className="col-md-12 row mb-3">
+                <div className="col-md-12 row mb-5">
                     {categories.map((category) => (
                         <div className="col-md-2">
                             <button className="me-3 btn text-primary " value={category.category} onClick={e => checkBoxClick(e)} name={category.category}>{category.category}</button>

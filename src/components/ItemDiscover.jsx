@@ -57,36 +57,38 @@ function ItemDiscover(props) {
                         category={item.category}
                         price={item.price}
                         color={item.color}
+                        hidden={true}
                         className="col-lg-3"
+                        width="18rem"
+                        height="26rem"
+                        imgHeight="18rem"
                     />
                 ))}
             </div>
             <br></br>
-            {categories.map((category) => (
-                <div hidden={hidden} id={category.category}>
-                    <hr></hr>
-                    <div key={category.ctgr_id} style={{marginLeft: "3rem", display: "flex"}}>
-                        <h3 style={{float: "left"}}>{category.category}</h3>
-                        <br></br>
-                    </div>
-                    <br></br>
-                    <div style={{margin: "0 2rem",  display: "flex", flexWrap: "wrap"}}>
-                        {items.filter(item => item.category === category.category).map((item, index) => (
-                            <Item
-                            id={item.id}
-                            key={index}
-                            name={item.name}
-                            category={item.category}
-                            price={item.price}
-                            color={item.color}
-                            className="col-lg-3"
-
-                            />
-                        ))}   
-                    </div>
+            <div >
+                <br></br>
+                <div hidden={hidden} style={{margin: "0 2rem",  display: "flex", flexWrap: "wrap", justifyContent:"center"}}>
+                    {items.map((item, index) => (
+                        <Item
+                        id={item.id}
+                        key={index}
+                        name={item.name}
+                        category={item.category}
+                        price={item.price}
+                        color={item.color}
+                        amount={item.amount}
+                        hidden={true}
+                        className="col-lg-3"
+                        width="18rem"
+                        height="26rem"
+                        imgHeight="18rem"
+                        />
+                    ))}   
                 </div>
+            </div>
                 
-            ))}
+
 
         </Fragment>
     );
