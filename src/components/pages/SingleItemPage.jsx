@@ -9,7 +9,7 @@ function SingleItemPage(props) {
     return (
         <Fragment>  
                 <Navbar user={user} order={props.order} editOrder={props.editOrder}/> 
-                <OneItem user={user} />   
+                <OneItem user={user} order={props.order}/>   
         </Fragment>
         
     )

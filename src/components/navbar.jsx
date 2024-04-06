@@ -6,7 +6,6 @@ function Navbar(props){
     const user = props.user;
     const order = props.order;
     const [hidden, setHidden] = useState(true);
-
     const name = user.name;
 
     const mouseOn = async() => {
@@ -18,16 +17,18 @@ function Navbar(props){
       setHidden(!hidden);
     };
 
-
-
     const checkOrder = () => {
       if(order.length === 0){
         return (<p className="my-5">Order is Empty</p>)
       } else if(order[0].list_of_items.length === 0){
         return (<p className="my-5">Order is Empty</p>)
       } else {
+        
+       
+
         return (
           <div className="d-flex flex-column-reverse align-items-center ">
+            <h5 className="text-danger">total: {order[0].total_price} CZK</h5>
             {order[0].list_of_items.map(item => (
               <div className="my-3">
                 <Item

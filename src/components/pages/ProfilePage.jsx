@@ -4,50 +4,53 @@ import logo from "../../images/logo.png"
 import shopImg from "../../images/shop.png"
 
 function ProfilePage (props) {
+    
     const user = props.user;
-    console.log(user);
+    
     const [prevOrders, setPrevOrders] = useState([]);
-    localStorage.getItem("token");
     const [hidden, setHidden] = useState(false);
-
-
+    console.log(prevOrders);
     function logout(e) {
         e.preventDefault();
         localStorage.removeItem("token");
         props.setAuth(false);
     };
 
-    const getPrevOrders =  async() => {
+    const getPrevOrders = async(id) => {
         try {
-            if(user.id === ""){
+            if(id === ""){
                 setHidden(false);
-                setPrevOrders([])
+                setPrevOrders([]);
             } else {
-                const user_id = user.id
+                const user_id = id;
                 const response = await fetch("http://localhost:4000/usersOrders", {
                     method: "POST",
                     headers: {"Content-Type":"Application/json"},
                     body: JSON.stringify({user_id})
                 });
-                const parseRes = await response.json()
+                const parseRes = await response.json();
                 if(parseRes) {
-                    setHidden(true);
-                    setPrevOrders(parseRes)
+                    if(parseRes.length === 0){
+                        setPrevOrders([]);
+                        setHidden(false);
+                    } else {
+                        setPrevOrders(parseRes);
+                        setHidden(true);
+                    } 
                 }else{
                     setPrevOrders([]);
                     setHidden(false);
                 };
-
-            }
-            
+            };
         } catch (err) {
             console.error(err);
         }
     };
 
-    useEffect(() => {
-        getPrevOrders();
-    }, []); // <-- dunno if array is needed
+    useEffect(() => {   
+        props.getUser();
+        getPrevOrders(user.id);
+    }, [user.id, ""]); // <------- checks if user.id and "" are different so if yes then run, works nicely
 
     return (
         <Fragment>
@@ -81,20 +84,19 @@ function ProfilePage (props) {
                            <tr>
                                <th>Order_ID</th>
                                <th>Ready</th>
+                               <th>Total</th>
                                <th>Details</th>
                            </tr>
                         </thead>
-                        <tbody>
-                           
-                               {prevOrders.map((order, index) => (
-                                    <tr key={index} className={order.complete ? "bg-light" : "bg-warning"}>
-                                        <td>{order.order_id}</td>
-                                        <td>{order.complete? "✔" : "❌"} </td>
-                                        <td><a href={"/order/" + order.order_id} className="text-primary">Details</a></td>
-                                    </tr>
-                               ))}
-                           
-                          
+                        <tbody>   
+                           {prevOrders.map((order, index) => (
+                                <tr key={index} className={order.complete ? "border-success" : "border-danger"}>
+                                    <td>{order.order_id}</td>
+                                    <td>{order.complete? "✔" : "❌"} </td>
+                                    <td>{order.total_price} kč</td>
+                                    <td><a href={"/order/"+ order.user_id + "/" + order.order_id} className="text-primary">Details</a></td>
+                                </tr>
+                           ))}
                         </tbody> 
                     </table>
             </div>

@@ -7,19 +7,20 @@ function Item(props){
   const { itemId } = useParams(props.id);
   const { category } = useParams(props.category);
 
-  const [amount, setAmount] = useState(props.amount);
-
+  const [itemAmount, setAmount] = useState(props.amount);
   const addAmount = () => { 
-    if(amount === props.in_stock){
-      setAmount(amount);
+    if(itemAmount === props.in_stock){
+      setAmount(itemAmount);
     } else {
-      setAmount(amount + 1);
+      setAmount(itemAmount + 1);
     }
+    var amount = itemAmount + 1;
     props.editOrder({amount, id: props.id});
   };
 
   const minusAmount = () => {
-    setAmount(amount - 1);
+    setAmount(itemAmount - 1);
+    var amount = itemAmount - 1;
     props.editOrder({amount, id: props.id});
   };
 
@@ -36,7 +37,7 @@ function Item(props){
               </div>
               <div className="text-center" hidden={props.hidden}>
                 <h6 onClick={addAmount} className="border border-dark bg-light p-1 m-0">+</h6>
-                <h6 className="border border-dark bg-light p-1 m-0" value={amount}>{amount}</h6>
+                <h6 className="border border-dark bg-light p-1 m-0" value={itemAmount}>{itemAmount}</h6>
                 <h6 onClick={minusAmount} className="border border-dark bg-light p-1 m-0">-</h6>
               </div>
             </div>

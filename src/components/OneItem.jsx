@@ -7,25 +7,33 @@ function OneItem(props) {
 
     const [item, setItem] = useState([]);
     const params = useParams();
+    const order = props.order
 
     const getSingleItem = async() => {
         const result = await fetch(`http://localhost:4000/discover/${params.category}/${params.itemId}`);
         const data = await result.json();
-        setItem(data)
+        setItem(data);
     };
 
 
-    const createOrder = async(e) => {
-        e.preventDefault();
+    const createOrder = async() => {
         try {
-        const list_of_items = item; // <-- change the (item) to an array or sth!
-        const user_id = props.user.id;  
-        const body = {list_of_items, user_id};
-        const response = await fetch("http://localhost:4000/createOrder", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(body)
-          });
+            let list_of_items = [];
+            if(!order) {
+               list_of_items = item;
+            } else {
+                order[0].list_of_items.push(item[0]);
+                list_of_items = order[0].list_of_items;
+            }
+            const user_id = props.user.id;  
+            const body = {list_of_items, user_id};
+            const response = await fetch("http://localhost:4000/createOrder", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(body)
+              });
+            const parseRes = await response.json();
+            console.log(parseRes);     
         } catch (err) {
           console.error(err.message);
         }

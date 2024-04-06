@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 import AllItems from "../allItems";
 import Categories from "../Categories";
+import logo from "../../images/logo.png";
 
 function AdminPage({user}) {
     const [name, setName] = useState("");
@@ -44,6 +45,7 @@ function AdminPage({user}) {
 
     return (
         <Fragment>
+            <a href="/"><img src={logo} className="my-4" style={{width: "40%" }} alt="DAMP"/></a>
             <h2 className="my-3 text-danger">This is an Admin-Only Site!</h2>
             <form method="POST" action="/admin/create" 
                 style={{ margin: "2rem", border: "solid 2px", padding: "1rem"}}
@@ -102,6 +104,8 @@ function AdminPage({user}) {
             <AllItems  />
             </div>
             <Categories />
+
+
         </Fragment>
 
     )
