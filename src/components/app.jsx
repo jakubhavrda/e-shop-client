@@ -40,6 +40,7 @@ const App = () => {
         const parseRes = await response.json();
         localStorage.setItem('order', JSON.stringify(parseRes));
         setOrder(JSON.parse(localStorage.getItem('order')));
+        console.log(order);
       }
     };
 

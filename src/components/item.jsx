@@ -35,10 +35,10 @@ function Item(props){
                 <h6 className="cart-subtitle">{props.category}</h6>
                 <h3 className="card-title">{props.price} kč</h3>
               </div>
-              <div className="text-center" hidden={props.hidden}>
-                <h6 onClick={addAmount} className="border border-dark bg-light p-1 m-0">+</h6>
-                <h6 className="border border-dark bg-light p-1 m-0" value={itemAmount}>{itemAmount}</h6>
-                <h6 onClick={minusAmount} className="border border-dark bg-light p-1 m-0">-</h6>
+              <div className="text-center">
+                <h6 onClick={addAmount} hidden={props.hidden} className="border border-dark bg-light p-1 m-0">+</h6>
+                <h6 className="border border-dark bg-light p-1 m-0" hidden={props.notInOrder} value={itemAmount}>{itemAmount}</h6>
+                <h6 onClick={minusAmount} hidden={props.hidden} className="border border-dark bg-light p-1 m-0">-</h6>
               </div>
             </div>
          

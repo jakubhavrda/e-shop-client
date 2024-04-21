@@ -33,13 +33,14 @@ function Navbar(props){
               <div className="my-3">
                 <Item
                   id={item.id}
-                  name={item.name}
+                  name={item.name.substring(0,9)+ "..."}
                   price={item.price}
                   category={item.category}
                   color={item.color}
                   amount={item.amount}
                   in_stock={item.in_stock}
                   editOrder={props.editOrder}
+                  notInOrder={false}
                   hidden={false}
                   width="12rem"
                   height="19rem"

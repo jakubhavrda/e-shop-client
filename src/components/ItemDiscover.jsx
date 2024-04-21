@@ -58,6 +58,7 @@ function ItemDiscover(props) {
                         price={item.price}
                         color={item.color}
                         hidden={true}
+                        notInOrder={true}
                         className="col-lg-3"
                         width="18rem"
                         height="26rem"
@@ -79,6 +80,7 @@ function ItemDiscover(props) {
                         color={item.color}
                         amount={item.amount}
                         hidden={true}
+                        notInOrder={true}
                         className="col-lg-3"
                         width="18rem"
                         height="26rem"

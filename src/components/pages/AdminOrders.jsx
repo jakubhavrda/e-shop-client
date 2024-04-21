@@ -3,17 +3,30 @@ import React, { Fragment, useEffect, useState } from "react";
 const AdminOrders = () => {
     
     const [orders, setOrders] = useState([]);
+    const [order_id, setOrderId] = useState("");
     console.log(orders);
 
     const getOrders = async() => {
         const response = await fetch("http://localhost:4000/admin/orders");
         const parseRes = await response.json();
-        setOrders(parseRes)
+        setOrders(parseRes);
     };
 
-    const completeOrder = async() => {
-        
-    }
+    const completeOrder = async(e) => {
+      e.preventDefault();
+      try { 
+        const response = await fetch("http://localhost:4000/order/complete", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({order_id}) 
+        });
+        const parseRes = await response.json();
+        window.location = "/admin/orders";
+      } catch (err) {
+        console.error(err);
+      }
+      
+    };
 
     useEffect(() => {
         getOrders();
@@ -28,6 +41,7 @@ const AdminOrders = () => {
                 <thead>
                    <tr>
                        <th>Order_ID</th>
+                       <th>User</th>
                        <th>Complete</th>
                        <th>Paid</th>
                        <th>Details</th>
@@ -37,7 +51,8 @@ const AdminOrders = () => {
                     {orders.map((order, index) => (
                         <tr key={index} className={order.complete ? "border-success" : "border-danger"}>
                             <td>{order.order_id}</td>
-                            <td>{order.complete? "✔" : order.paid? <button type="button" data-bs-toggle="modal" data-bs-target="#modalComplete" className="btn btn-warning">Finish!</button> : "❌"} </td>
+                            <td>{order.user_id}</td>
+                            <td>{order.complete? "✔" : order.paid? <button id="orderId" type="button" data-bs-toggle="modal" onClick={() => setOrderId(order.order_id)} data-bs-target="#modalComplete" className="btn btn-warning">Finish!</button> : "❌"} </td>
                             <td>{order.paid? "✔" : "❌"} </td>
                             <td><a href={"/order/"+ order.user_id + "/" + order.order_id} className="text-primary">Details</a></td>
                         </tr>
@@ -54,10 +69,10 @@ const AdminOrders = () => {
                     </button>
                   </div>
                   <div class="modal-body">
-                    Do you want to set order to complete!
+                    Do you want to complete the order!
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-success">YES</button>
+                    <button type="button" class="btn btn-success" onClick={completeOrder}>YES</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Not yet.</button>
                   </div>
                 </div>

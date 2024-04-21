@@ -59,16 +59,16 @@ function ProfilePage (props) {
             <h1 className="my-5">Welcome, {user.name} !</h1>
             
 
-            <div className="grid-profile" >
-                <div className="userData grid-profile-child">
+            <div className="flex-profile" >
+                <div className="userData flex-profile-child">
                     <h3 className="my-3">User Credentials</h3>
                     <Link hidden={!props.admin} className="text-danger mt-5" to="/admin">! Click here for Admin Page !</Link>
-                    <h6 className="mt-3">user_name: <u className="text-primary">{user.name}</u></h6>
-                    <h6>email: <u className="text-primary">{user.email}</u></h6>
+                    <h6 className="mt-3">user_name: <u className="text-success">{user.name}</u></h6>
+                    <h6>email: <u className="text-success">{user.email}</u></h6>
                     
                     <button onClick={e => logout(e)} className="btn btn-outline-danger">Logout</button>
                 </div>
-                <div className="grid-profile-child">
+                <div className="flex-profile-child">
                     <a href="/"><img src={shopImg} alt="Click here to go shopping" className="shopImg"/></a>
                 </div>  
             </div>

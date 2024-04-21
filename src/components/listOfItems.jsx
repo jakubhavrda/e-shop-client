@@ -33,6 +33,7 @@ function ListOfItems(){
                     price={item.price}
                     color={item.color}
                     amount={item.amount}
+                    notInOrder={true}
                     hidden={true}
                     width="18rem"
                     height="26rem"

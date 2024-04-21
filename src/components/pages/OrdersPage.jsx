@@ -12,6 +12,7 @@ function OrdersPage(props) {
             const response = await fetch(`http://localhost:4000/order/${params.user_id}/${params.order_id}`);
             const parseRes = await response.json();
             setOrder(parseRes);
+            console.log(order);
         } catch (err) {
             console.error(err);
         }   
@@ -56,6 +57,7 @@ function OrdersPage(props) {
                             category={item.category}
                             price={item.price}
                             amount={item.amount}
+                            notInOrder={false}
                             hidden={authorizeOrder()}
                             editOrder={props.editOrder}
                             className="col-lg-6"
