@@ -33,7 +33,7 @@ function AllItems() {
 
     return (
         <Fragment>
-        <div className="parent">
+        <div className="allItems">
             {items.map((item, index) => (
                 <div style={{margin: "2rem", border: "solid 2px", padding: "1rem"}}>
                     <p key={index}>id: {item.id}</p>

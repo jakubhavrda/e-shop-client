@@ -90,21 +90,20 @@ function Searchbar(props){
     return (
         <Fragment>
             <br />
-            <form style={{marginLeft: "3rem", height: "3rem"}} className="row">
+            <form id="searchbar" className="row">
                 
-                
-                <div style={{display: "flex", gap: "1rem"}} className={hidden ? "col-md-11" : "col-md-8"}>
+                <div id="searchbarInput" className={hidden ? "col-md-11" : "col-md-8"}>
                     <input type="search" value={query} onChange={e => queryFunction(e)} className="border-secondary form-control" placeholder="Search for products. . ."/>
                 </div>
-                <div hidden={hidden} className="col-md-4">
-                    <a href="/login"><p style={{marginRight: "1rem"}} className="btn btn-lg btn-outline-info">Login</p></a>
+                <div id="searchbarButtons" hidden={hidden} className="col-md-4">
+                    <a href="/login"><p className="btn btn-lg btn-outline-info">Login</p></a>
                     <a href="/register"><p className="btn btn-lg btn-info">Register</p></a>
                 </div>
                 
-                <div className="col-md-12 row mb-5">
+                <div id="searchbarCategories">
                     {categories.map((category) => (
-                        <div className="col-md-2">
-                            <button className="me-3 btn text-primary " value={category.category} onClick={e => checkBoxClick(e)} name={category.category}>{category.category}</button>
+                        <div>
+                            <button className="me-3 btn text-secondary" value={category.category} onClick={e => checkBoxClick(e)} name={category.category}>{category.category}</button>
                         </div>
                     ))}
                    
@@ -112,7 +111,7 @@ function Searchbar(props){
             </form>
             
             <br />
-            <p className="text-danger mt-3 mx-5" style={{position: "absolute"}}>{text404}</p>
+            <h4 className="text-danger mt-3 mx-5 bg-light border-danger" style={{position: "absolute"}}>{text404}</h4>
 
         </Fragment>
     )

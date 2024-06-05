@@ -11,6 +11,13 @@ body{
     background-color:#fff;
 }
 
+@media (max-width: 500px) {
+    body{
+        width: 100%;
+        background-color: azure;
+    }
+}
+
 input{
     height: 2.5rem;
 }
@@ -30,6 +37,14 @@ input{
     margin-left: 0.6rem;
 }
 
+.allItems{
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+
+
+
 .profile-icon{
     float: right;
     position: absolute;
@@ -40,14 +55,23 @@ input{
     display: inline;
 }
 
-.parent {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    align-items: center;
-    margin-left: 4rem;
+.newOffersParent {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
 }
 
-
+@media (max-width: 992px) {
+    .nav-item{
+        text-align: left;
+    }
+    .profile-icon{
+        position: relative;
+    }
+    .fa-basket-shopping{
+        margin-right: 10px;
+    }
+}
 
 .card{
     border: 0.1rem solid rgb(197, 197, 197);
@@ -92,10 +116,9 @@ a {
 }
 
 
-.shopImg {
-    border-radius: 3rem;
-    width: 450px;
-}
+
+
+/******      PROFILE Page     ******/
 
 .flex-profile-child{
     border-radius: 3rem;
@@ -103,6 +126,10 @@ a {
     height: 450px;   
 }
 
+.shopImg {
+    border-radius: 3rem;
+    width: 450px;
+}
 .userData{
     background-color: #99e2f8;
 }
@@ -121,6 +148,25 @@ a {
     }
   }
 
+@media (max-width: 800px) {
+    .flex-profile-child{
+        width: 350px;
+        height: 350px;
+    }
+    .shopImg{
+        width: 350px;
+    }
+}
+
+@media (max-width: 450px){
+    .flex-profile-child{
+        width: 280px;
+        height: 280px;
+    }
+    .shopImg{
+        width: 280px;
+    }
+}
 
 /****   Single Item Page    ****/
 
@@ -205,6 +251,12 @@ a {
         width: 100%;
         padding: 0;
     }
+
+
+    .allItems{
+        display: grid;
+        grid-template-columns: auto;
+    }
 }
 
 
@@ -235,5 +287,66 @@ a {
     .siPic{
         width: 55px;
         height: 55px;
+    }
+}
+
+
+/*****   Searchbar   ******/
+
+#searchbar{
+    margin: 0 2rem;
+    margin-bottom: 5px;
+    height: 3rem;
+}
+
+#searchbarInput input{
+    height: 2.9rem;
+}
+
+
+
+#searchbarButtons .btn-outline-info{
+    margin-right: 1rem;
+}
+
+
+#searchbarCategories{
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+
+@media (max-width: 950px) {
+    #searchbar{
+        margin: 0;
+        height: 3.5rem;
+    }
+}
+
+@media (max-width: 870px) {
+    #searchbar{
+        height: 5rem;
+    }
+    #searchbarButtons{
+        width: 100%;
+        text-align: left;
+        margin-top: 5px;
+        margin-bottom: -0.8rem;
+    }
+    .content-img{
+       display: none;
+    }
+}
+
+@media (max-width: 550px) {
+    #searchbar{
+        height: 6rem;
+    }
+    #searchbarButtons{
+        margin-bottom: 0;
+    }
+    #newOffers{
+        margin-top: 20px;
     }
 }

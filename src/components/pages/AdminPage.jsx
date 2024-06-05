@@ -2,6 +2,9 @@ import React, { Fragment, useState, useEffect } from "react";
 import AllItems from "../allItems";
 import Categories from "../Categories";
 import logo from "../../images/logo.png";
+//const multer = require("multer");
+//const storage = multer.memoryStorage();
+//const upload = multer({storage: storage, dest: 'uploads/'});
 
 function AdminPage({user}) {
     const [name, setName] = useState("");
@@ -10,7 +13,7 @@ function AdminPage({user}) {
     const [inStock, setInStock] = useState("");
     const [color, setColor] = useState("");
     const [description, setDescription] = useState("");
-    //const [images, setImages] = useState([]);
+    const images = [];
     
     const [categories, setCategories] = useState([]);
 
@@ -26,12 +29,20 @@ function AdminPage({user}) {
         e.preventDefault();
         try {
             const body = [name, price, category, inStock, color, description];
-            const result = fetch("http://localhost:4000/admin/create",{
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body)
-            });
-            window.location = "/admin/create"
+            
+            
+            // images array includes 4 filepaths
+            //no idea how to transfer to multer ! ... req.files?
+            console.log(images);
+
+    
+
+            //const result = fetch("http://localhost:4000/admin/create",{
+            //    method: "POST",
+            //    headers: { "Content-Type": "application/json" },
+            //    body: JSON.stringify(body)
+            //});
+            //window.location = "/admin"
         } catch (err) {
             console.error(err);
         }
@@ -51,7 +62,8 @@ function AdminPage({user}) {
                 <a href="/"><button>Shop</button></a>
                 <a href="/admin/orders"><button>Manage Orders</button></a>
             </div>
-            <form method="POST" action="/admin/create" 
+            <form method="POST" action="/admin/create"
+                enctype="multipart/form-data"
                 style={{ margin: "2rem", border: "solid 2px", padding: "1rem"}}
                 onSubmit={createItem}>
             
@@ -81,11 +93,17 @@ function AdminPage({user}) {
 
                     <label className="form-label">In_Stock:</label>
                         <input className="form-control border-success" type="number" name="inStock" value={inStock} onChange={e => setInStock(e.target.value)}></input>
-                    (Images not yet in progres) 
                     <label className="form-label">Images:</label>
-                    <input className="form-control border-success" type="file" name="image1"></input>
-                    <input className="form-control border-success" type="file" name="image2"></input>
-                    <input className="form-control border-success" type="file" name="image3"></input>
+                    
+                    
+                    
+                    <input className="form-control border-success" type="file" accept="image/jpg, image/jpeg, image/png" name="image" onChange={e => images.push(e.target.value)}></input>
+                    <input className="form-control border-success" type="file" accept="image/jpg, image/jpeg, image/png" name="image" onChange={e => images.push(e.target.value)}></input>
+                    <input className="form-control border-success" type="file" accept="image/jpg, image/jpeg, image/png" name="image" onChange={e => images.push(e.target.value)}></input>
+                    <input className="form-control border-success" type="file" accept="image/jpg, image/jpeg, image/png" name="image" onChange={e => images.push(e.target.value)}></input>
+                    
+
+
                         <br/>
                     <label className="form-label">Color:</label>
                     <input type="text" className="form-control border-success" name="color" value={color}  onChange={e => setColor(e.target.value)}/>

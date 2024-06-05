@@ -23,7 +23,7 @@ function ListOfItems(){
         <br />
         <br />
         <h1 id="newOffers">New Offers</h1>
-        <div className="parent">
+        <div className="newOffersParent">
                 {items.map((item, index) => (
                     <Item
                     key={index}

@@ -20,7 +20,7 @@ function Categories(){
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)
             });
-            window.location = "/admin/create";
+            window.location = "/admin";
         } catch (err) {
             console.error(err);
         };

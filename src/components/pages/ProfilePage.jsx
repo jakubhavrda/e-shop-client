@@ -69,7 +69,7 @@ function ProfilePage (props) {
                     <button onClick={e => logout(e)} className="btn btn-outline-danger">Logout</button>
                 </div>
                 <div className="flex-profile-child">
-                    <a href="/"><img src={shopImg} alt="Click here to go shopping" className="shopImg"/></a>
+                    <a href="/"><img src={shopImg} alt="Click here to go shopping" className="shopImg" /></a>
                 </div>  
             </div>
             
