@@ -350,3 +350,29 @@ a {
         margin-top: 20px;
     }
 }
+
+/*****   Admin Page   *****/
+
+.display-product{
+    display: flex;
+    justify-content: space-around;
+}
+
+
+
+.display-product-column{
+    width: 30%;
+    display: inline-block;
+}
+
+@media (max-width: 950px) {
+    .display-product{
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .display-product-column{
+        width: 100%;
+        justify-content: center;
+    }
+}

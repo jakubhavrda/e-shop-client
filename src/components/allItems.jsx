@@ -53,7 +53,7 @@ function AllItems() {
                             color={item.color}
                             description={item.description}
                             />
-                        <button className="btn btn-danger" onClick={() => {deleteItem(item.id)}}><i class="fa-solid fa-trash-can"></i></button>
+                        <button className="btn btn-danger" onClick={() => {deleteItem(item.id)}}><i className="fa-solid fa-trash-can"></i></button>
                     </div>
 
 

@@ -2,9 +2,6 @@ import React, { Fragment, useState, useEffect } from "react";
 import AllItems from "../allItems";
 import Categories from "../Categories";
 import logo from "../../images/logo.png";
-//const multer = require("multer");
-//const storage = multer.memoryStorage();
-//const upload = multer({storage: storage, dest: 'uploads/'});
 
 function AdminPage({user}) {
     const [name, setName] = useState("");
@@ -13,7 +10,8 @@ function AdminPage({user}) {
     const [inStock, setInStock] = useState("");
     const [color, setColor] = useState("");
     const [description, setDescription] = useState("");
-    const images = [];
+    const [images, setImages] = useState(null);
+
     
     const [categories, setCategories] = useState([]);
 
@@ -23,31 +21,37 @@ function AdminPage({user}) {
         setCategories(data);
     };
 
-    
 
     const createItem = async(e) => {
         e.preventDefault();
         try {
+            const formData = new FormData();
+            formData.append("image", images);
             const body = [name, price, category, inStock, color, description];
             
-            
-            // images array includes 4 filepaths
-            //no idea how to transfer to multer ! ... req.files?
-            console.log(images);
+            const response = await fetch("http://localhost:4000/admin/upload", { 
+                method: "POST",
+                body: formData,
+            });
+            if (response.ok){
+                const imageData = await response.json();
+                console.log("Image uploaded:", imageData);
+            } else {
+                console.error('Failed to upload image');
+            }
 
-    
-
-            //const result = fetch("http://localhost:4000/admin/create",{
-            //    method: "POST",
-            //    headers: { "Content-Type": "application/json" },
-            //    body: JSON.stringify(body)
-            //});
-            //window.location = "/admin"
+            const result = fetch("http://localhost:4000/admin/create",{
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+            });
+            window.location = "/admin"
         } catch (err) {
             console.error(err);
         }
 
     };
+
 
     useEffect(() => {
         getCategory();
@@ -68,8 +72,8 @@ function AdminPage({user}) {
                 onSubmit={createItem}>
             
             <h2>Display a product</h2>
-            <div style={{display: "flex",justifyContent: "space-around"}}>
-                <div style={{width: "30%", display: "inline-block"}}>
+            <div className="display-product">
+                <div className="display-product-column">
                
                     <label className="form-label">Name:</label>
                     <input className="form-control border-success" type="text" name="name" value={name} onChange={e => setName(e.target.value)}></input>
@@ -86,33 +90,27 @@ function AdminPage({user}) {
                       
                     </select>
                         <br/>
-                    <button type="submit" className="btn btn-primary">Submit</button>
+                    
 
                 </div>
-                <div style={{width: "30%", display: "inline-block"}}>
+                <div className="display-product-column">
 
                     <label className="form-label">In_Stock:</label>
                         <input className="form-control border-success" type="number" name="inStock" value={inStock} onChange={e => setInStock(e.target.value)}></input>
                     <label className="form-label">Images:</label>
-                    
-                    
-                    
-                    <input className="form-control border-success" type="file" accept="image/jpg, image/jpeg, image/png" name="image" onChange={e => images.push(e.target.value)}></input>
-                    <input className="form-control border-success" type="file" accept="image/jpg, image/jpeg, image/png" name="image" onChange={e => images.push(e.target.value)}></input>
-                    <input className="form-control border-success" type="file" accept="image/jpg, image/jpeg, image/png" name="image" onChange={e => images.push(e.target.value)}></input>
-                    <input className="form-control border-success" type="file" accept="image/jpg, image/jpeg, image/png" name="image" onChange={e => images.push(e.target.value)}></input>
-                    
+                    /** Write "multiple" before "accept" **/
+                    <input className="form-control border-success" type="file" accept="image/jpg, image/jpeg, image/png" name="image" onChange={e => setImages(e.target.files[0])}></input>
 
-
-                        <br/>
+                    <br/>
                     <label className="form-label">Color:</label>
                     <input type="text" className="form-control border-success" name="color" value={color}  onChange={e => setColor(e.target.value)}/>
-                        <br/>
+                    <br/>
                     
                 </div>
-                <div style={{width: "30%", display: "inline-block"}}>
-                        <label className="form-label">Description, maximum of 700 characters</label>
-                        <textarea maxLength="700" rows="11" className="form-control border-success" value={description} onChange={e => setDescription(e.target.value)}></textarea>
+                <div className="display-product-column">
+                    <label className="form-label">Description, maximum of 700 characters</label>
+                    <textarea maxLength="700" rows="11" className="form-control border-success" value={description} onChange={e => setDescription(e.target.value)}></textarea>
+                    <button type="submit" className="my-3 btn btn-lg btn-primary">Submit</button>
                 </div>
             </div>
                 

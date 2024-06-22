@@ -59,7 +59,7 @@ function Categories(){
                     {categories.map((item) => (
                         <tr key={item.ctgr_id}>
                             <td>{item.category}</td>
-                            <td><button className="btn btn-danger" onClick={() => {deleteCategory(item.ctgr_id)}}><i class="fa-solid fa-trash-can"></i></button></td>
+                            <td><button className="btn btn-danger" onClick={() => {deleteCategory(item.ctgr_id)}}><i className="fa-solid fa-trash-can"></i></button></td>
                         </tr>               
                     ))}
                     </tbody>

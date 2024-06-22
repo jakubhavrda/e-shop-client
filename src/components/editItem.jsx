@@ -42,7 +42,7 @@ const EditItem = (props) => {
     return (
         <Fragment>
             <button type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target={`#id${props.id}`} >              
-                <i class="fa-solid fa-pen-to-square"></i>
+                <i className="fa-solid fa-pen-to-square"></i>
             </button>
             <div className="modal" id={`id${props.id}`}>
               <div className="modal-dialog">

@@ -59,21 +59,21 @@ const AdminOrders = () => {
                    ))}
                 </tbody> 
             </table>
-            <div class="modal fade" id="modalComplete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Warning!</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <div className="modal fade" id="modalComplete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div className="modal-dialog" role="document">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title" id="exampleModalLabel">Warning!</h5>
+                    <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
-                  <div class="modal-body">
+                  <div className="modal-body">
                     Do you want to complete the order!
                   </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-success" onClick={completeOrder}>YES</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Not yet.</button>
+                  <div className="modal-footer">
+                    <button type="button" className="btn btn-success" onClick={completeOrder}>YES</button>
+                    <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Not yet.</button>
                   </div>
                 </div>
               </div>
