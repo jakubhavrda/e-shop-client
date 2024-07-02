@@ -9,7 +9,7 @@ function ProfilePage (props) {
     
     const [prevOrders, setPrevOrders] = useState([]);
     const [hidden, setHidden] = useState(false);
-    console.log(prevOrders);
+    
     function logout(e) {
         e.preventDefault();
         localStorage.removeItem("token");

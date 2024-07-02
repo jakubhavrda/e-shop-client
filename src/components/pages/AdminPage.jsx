@@ -10,7 +10,7 @@ function AdminPage({user}) {
     const [inStock, setInStock] = useState("");
     const [color, setColor] = useState("");
     const [description, setDescription] = useState("");
-    const [images, setImages] = useState(null);
+    const [images, setImages] = useState([]);  // image files here!
 
     
     const [categories, setCategories] = useState([]);
@@ -26,25 +26,33 @@ function AdminPage({user}) {
         e.preventDefault();
         try {
             const formData = new FormData();
-            formData.append("image", images);
+            for(let i = 0; i < images.length; i++){
+                formData.append("images", images[i]);
+            };
+
             const body = [name, price, category, inStock, color, description];
             
-            const response = await fetch("http://localhost:4000/admin/upload", { 
-                method: "POST",
-                body: formData,
-            });
-            if (response.ok){
-                const imageData = await response.json();
-                console.log("Image uploaded:", imageData);
-            } else {
-                console.error('Failed to upload image');
-            }
-
-            const result = fetch("http://localhost:4000/admin/create",{
+            const result = await fetch("http://localhost:4000/admin/create",{
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
             });
+            const product = await result.json();
+            console.log(product.id);
+
+
+            // image upload !
+            const response = await fetch(`http://localhost:4000/admin/upload/${product.id}`, { 
+                method: "POST",
+                body: formData,
+            });
+            if (response.ok){
+                console.log("Image uploaded");
+            } else {
+                console.log('Failed to upload images');
+            };
+
+
             window.location = "/admin"
         } catch (err) {
             console.error(err);
@@ -98,8 +106,7 @@ function AdminPage({user}) {
                     <label className="form-label">In_Stock:</label>
                         <input className="form-control border-success" type="number" name="inStock" value={inStock} onChange={e => setInStock(e.target.value)}></input>
                     <label className="form-label">Images:</label>
-                    /** Write "multiple" before "accept" **/
-                    <input className="form-control border-success" type="file" accept="image/jpg, image/jpeg, image/png" name="image" onChange={e => setImages(e.target.files[0])}></input>
+                    <input className="form-control border-success" type="file" multiple accept="image/jpg, image/jpeg, image/png" name="images" onChange={e => setImages(e.target.files)}></input>
 
                     <br/>
                     <label className="form-label">Color:</label>
