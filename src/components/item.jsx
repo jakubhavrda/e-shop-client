@@ -1,12 +1,15 @@
 import React, {useState} from "react";
 import { useParams } from "react-router-dom";
-import kolo from "../images/products/duck3.png"
+import duck_img from "../images/products/duck3.png";
+
 
 
 function Item(props){
 
   const { itemId } = useParams(props.id);
   const { category } = useParams(props.category);
+
+  console.log(props.imgSource)
 
   const [itemAmount, setAmount] = useState(props.amount);
   const addAmount = () => { 
@@ -28,7 +31,7 @@ function Item(props){
     return(
         <div id={props.id} className="card" style={{width: props.width, height: props.height}}>
           <a href={"/discover/"+ props.category + "/" + props.id}>
-            <img src={kolo} className="card-img-top" alt={props.name} style={{borderBottomColor: props.color, height: props.imgHeight}}/>
+            <img src={require("../"+ props.imgSource.path)} className="card-img-top" alt={props.name} style={{borderBottomColor: props.color, height: props.imgHeight}}/>
            </a>
             <div className="card-body d-flex justify-content-between">
               <div>

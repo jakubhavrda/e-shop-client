@@ -14,9 +14,10 @@ function ListOfItems(){
         const images = data.images;
         setMainImgs([images[0], images[4], images[8]]);
         setItems(data.products);
+        console.log(mainImgs[0]);
     };
 
-    console.log(mainImgs);
+ 
 
     useEffect(() => {
         getItems();
@@ -43,7 +44,7 @@ function ListOfItems(){
                     width="18rem"
                     height="26rem"
                     imgHeight="18rem"
-                    imgSource={mainImgs[index].path}
+                    imgSource={mainImgs[index]}
                     />
                 ))}   
             </div>

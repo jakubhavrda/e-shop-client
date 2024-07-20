@@ -54,7 +54,7 @@ function ProfilePage (props) {
 
     return (
         <Fragment>
-            <a href="/"><img src={logo} className="mt-5" style={{width: "20rem" }} alt="&& logo"/></a>
+            <a href="/"><img src={logo} className="mt-5" style={{width: "8rem" }} alt="&& logo"/></a>
             
             <h1 className="my-5">Welcome, {user.name} !</h1>
             

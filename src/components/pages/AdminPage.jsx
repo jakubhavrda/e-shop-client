@@ -68,7 +68,7 @@ function AdminPage({user}) {
 
     return (
         <Fragment>
-            <a href="/"><img src={logo} className="my-4" style={{width: "40%" }} alt="DAMP"/></a>
+            <a href="/"><img src={logo} className="my-4" style={{width: "10rem" }} alt="DAMP"/></a>
             <h2 className="my-3 text-danger">This is an Admin-Only Site!</h2>
             <div className="mx-5 ">
                 <a href="/"><button>Shop</button></a>

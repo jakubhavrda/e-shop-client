@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
+import duck_img from "../images/products/duck3.png";
 
 
 function OneItem(props) {
@@ -56,12 +56,12 @@ function OneItem(props) {
                         <h1>{item.name}</h1>
                         <h3 style={{color: "#ff0800"}}>{item.price} CZK</h3>
                         <p>{item.category}</p>
-                        <img className="siMainPic" style={{borderTopColor: item.color}} src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/c3be8ab1-9281-41db-a54a-abe3df27a8d3/dri-fit-hwpo-training-t-shirt-S6zK5k.png"></img>
+                        <img className="siMainPic" style={{borderTopColor: item.color}} src={duck_img}></img>
                     </div>
                     <div className="singleItemPictures">
-                        <div className="siPic"></div>
-                        <div className="siPic"></div>
-                        <div className="siPic"></div>
+                        <div><img className="siPic" src={duck_img}></img></div>
+                        <div><img className="siPic" src={duck_img}></img></div>
+                        <div><img className="siPic" src={duck_img}></img></div>
                     </div>
                     <div className="singleItemText">
                         <p>{item.description}</p>

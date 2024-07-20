@@ -45,7 +45,7 @@ function LoginPage({ setAuth }) {
     
     return (
         <Fragment>
-            <a href="/"><img src={logo} className="mt-5" style={{width: "20rem" }} alt="&& logo"/></a>
+            <a href="/"><img src={logo} className="mt-5" style={{width: "10rem" }} alt="logo"/></a>
             <h1 className="my-5">Login</h1>
             <Link to="/register" className="text-primary fst-italic">Don't have an account? Click Here!</Link>
             

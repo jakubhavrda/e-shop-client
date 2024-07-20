@@ -3,6 +3,7 @@ import logo from "../../images/logo.png"
 import { useParams } from "react-router";
 import Item from "../item";
 
+
 function OrdersPage(props) {
     const [order, setOrder] = useState([]);
     const params = useParams();
@@ -60,6 +61,7 @@ function OrdersPage(props) {
                             notInOrder={false}
                             hidden={authorizeOrder()}
                             editOrder={props.editOrder}
+                            imgSource={{path: "images/products/duck3.png"}}
                             className="col-lg-6"
                             width="18rem"
                             height="26rem"

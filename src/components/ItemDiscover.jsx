@@ -1,5 +1,5 @@
 import React, {Fragment, useState, useEffect} from "react";
-import Item from "./item"
+import Item from "./item";
 
 
 
@@ -59,6 +59,7 @@ function ItemDiscover(props) {
                         color={item.color}
                         hidden={true}
                         notInOrder={true}
+                        imgSource={{path: "images/products/duck3.png"}}
                         className="col-lg-3"
                         width="18rem"
                         height="26rem"
@@ -81,6 +82,7 @@ function ItemDiscover(props) {
                         amount={item.amount}
                         hidden={true}
                         notInOrder={true}
+                        imgSource={{path: "images/products/duck3.png"}}
                         className="col-lg-3"
                         width="18rem"
                         height="26rem"
