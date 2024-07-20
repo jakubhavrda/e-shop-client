@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import { useParams } from "react-router-dom";
-import kolo from "../images/products/kolo.jpg"
+import kolo from "../images/products/duck3.png"
+
 
 function Item(props){
 

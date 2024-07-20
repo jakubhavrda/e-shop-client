@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logo from "../images/logo.png"
+import duck2 from "../images/duck2.png";
 import Item from "./item";
 import "../styles.css"
 function Navbar(props){
@@ -67,7 +67,7 @@ function Navbar(props){
             <nav className="navbar navbar-expand-lg">
               <div className="container-fluid">
                 <a className="navbar-brand" href="#">
-                  <img src={logo} alt="&&" width="120" height="40" />
+                  <img src={duck2} alt="&&" width="60" height="60" />
                 </a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                   <span className="navbar-toggler-icon"></span>

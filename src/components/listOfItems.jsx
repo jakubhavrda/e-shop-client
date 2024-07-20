@@ -1,17 +1,22 @@
 import React, { Fragment, useEffect, useState } from "react";
 import Item from "./item";
-import subImg from "../images/sub-img.png"
-import logo from "../images/logo.png"
+import subImg from "../images/duck_sub_img.png"
+import duck_background from "../images/duck_background.png"
 
 function ListOfItems(){
 
     const [items, setItems] = useState([]);
+    const [mainImgs, setMainImgs] = useState([]);
 
     const getItems = async() => {
-        const result = await fetch("http://localhost:4000")
-        const data = await result.json()
-        setItems(data);
-    }
+        const result = await fetch("http://localhost:4000/");
+        const data = await result.json();
+        const images = data.images;
+        setMainImgs([images[0], images[4], images[8]]);
+        setItems(data.products);
+    };
+
+    console.log(mainImgs);
 
     useEffect(() => {
         getItems();
@@ -19,7 +24,7 @@ function ListOfItems(){
     return (
         <Fragment>
         <br />
-        <img className="content-img" src={logo} alt="logo of &&" />
+        <img className="content-img" src={duck_background} alt="logo of &&" />
         <br />
         <br />
         <h1 id="newOffers">New Offers</h1>
@@ -38,6 +43,7 @@ function ListOfItems(){
                     width="18rem"
                     height="26rem"
                     imgHeight="18rem"
+                    imgSource={mainImgs[index].path}
                     />
                 ))}   
             </div>
