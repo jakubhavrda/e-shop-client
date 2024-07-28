@@ -7,6 +7,7 @@ function Navbar(props){
     const order = props.order;
     const [hidden, setHidden] = useState(true);
     const name = user.name;
+    console.log(order);
 
     const mouseOn = async() => {
      if(!user){
@@ -23,8 +24,6 @@ function Navbar(props){
       } else if(order[0].list_of_items.length === 0){
         return (<p className="my-5">Order is Empty</p>)
       } else if (order[0].user_id !== user.id){
-        console.log(user.id);
-        console.log(order[0].user_id);
         return (<p className="my-5">Order is Empty</p>)
       } else {
         
@@ -37,9 +36,10 @@ function Navbar(props){
               <a href="/myOrder"><h5 className="my-3 btn btn-success">Finish Order!</h5></a>
             </div>
             
-            {order[0].list_of_items.map(item => (
+            {order[0].list_of_items.map((item, index) => (
               <div className="my-3">
                 <Item
+                  key={index}
                   id={item.id}
                   name={item.name.substring(0,9)+ "..."}
                   price={item.price}

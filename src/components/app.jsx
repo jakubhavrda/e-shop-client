@@ -65,6 +65,7 @@ const App = () => {
         setOrder(JSON.parse(localStorage.getItem('order')));
         
       } else{
+
         const itemToEdit = order[0].list_of_items.filter(item => item.id === x.id);
         itemToEdit[0].amount = x.amount
         const number = order.length;
@@ -92,7 +93,7 @@ const App = () => {
     };
 
     const setAuth = (boolean) => {
-        setIsAuthenticated(boolean)
+      setIsAuthenticated(boolean);
     };
 
     async function isAuth() {
@@ -156,7 +157,6 @@ const App = () => {
                 <Route exact path="/login" element={ !isAuthenticated ? <LoginPage setAuth={setAuth} /> : <Navigate to="/profile" /> } />
                 <Route exact path="/register" element={ !isAuthenticated ? <Register setAuth={setAuth}/> : <Navigate to="/login" /> } />
                 <Route exact path="/profile" element={  isAuthenticated ? <ProfilePage setAuth={setAuth} getUser={getUser} user={user} admin={admin} /> : <Navigate to="/login" /> } />
-                
            </Routes>
         </BrowserRouter> 
     )

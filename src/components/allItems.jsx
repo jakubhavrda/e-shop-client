@@ -10,7 +10,7 @@ function AllItems() {
     const getItems = async() => {
         const result = await fetch("http://localhost:4000/allProducts")
         const data = await result.json()
-        setItems(data);
+        setItems(data.products);
     };
     
     const deleteItem = async(id) => {

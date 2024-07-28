@@ -30,9 +30,9 @@ function Searchbar(props){
         try {
             setQuery(e.target.value);
             if(query === ""){
-                setArrayQuery([]);
+                setArrayQuery({products: [], images: []});
             } else if(query === " "){
-                setArrayQuery([]);
+                setArrayQuery({products: [], images: []});
             } else {
                 const body = {name: "%" + capitalizeFirstLetter() + "%"}
                 const response = await fetch("http://localhost:4000/searchbar", {
@@ -50,7 +50,6 @@ function Searchbar(props){
                 setArrayQuery(data);
             };
             
-            
             props.getQuery(arrayQuery);
         } catch (err) {
             console.error(err.message);
@@ -64,13 +63,13 @@ function Searchbar(props){
         setCategories(data);
     };
 
-    const checkBoxClick =  async(e) => {
+    const categoryClick =  async(e) => {
         e.preventDefault();
         try {
             const params = e.target.value;
             const result = await fetch(`http://localhost:4000/searchbar/${params}`);
             const data = await result.json()
-            props.getQuery(data);
+            props.getQuery(data); // data.products /quick fix/
         } catch (err) {
             console.error(err);
         }
@@ -103,7 +102,7 @@ function Searchbar(props){
                 <div id="searchbarCategories">
                     {categories.map((category) => (
                         <div>
-                            <button className="me-3 btn text-secondary" value={category.category} onClick={e => checkBoxClick(e)} name={category.category}>{category.category}</button>
+                            <button className="me-3 btn text-secondary" value={category.category} onClick={e => categoryClick(e)} name={category.category}>{category.category}</button>
                         </div>
                     ))}
                    

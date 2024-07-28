@@ -1,19 +1,24 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import duck_img from "../images/products/duck3.png";
+
 
 
 function OneItem(props) {
 
     const [item, setItem] = useState([]);
+    const [images, setImages] = useState([]);
     const params = useParams();
-    const order = props.order
+    const order = props.order;
+    console.log(order);
+    console.log(item);
 
     const getSingleItem = async() => {
         const result = await fetch(`http://localhost:4000/discover/${params.category}/${params.itemId}`);
         const data = await result.json();
-        setItem(data);
+        setItem(data.product);
+        setImages(data.images);
     };
+
 
 
     const createOrder = async() => {
@@ -27,7 +32,7 @@ function OneItem(props) {
             }
             const user_id = props.user.id;  
             const body = {list_of_items, user_id};
-            const response = await fetch("http://localhost:4000/createOrder", {
+            const response = await fetch("http://localhost:4000/createOrEditOrder", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(body)
@@ -49,19 +54,19 @@ function OneItem(props) {
     return(
         <Fragment>
             <hr />
-            {item.map(item => (
-                <div className="singleItemParent">
+            {item.map((item, index) => (
+                <div id={index} className="singleItemParent">
                     
                     <div className="singleItemCard" > 
                         <h1>{item.name}</h1>
                         <h3 style={{color: "#ff0800"}}>{item.price} CZK</h3>
                         <p>{item.category}</p>
-                        <img className="siMainPic" style={{borderTopColor: item.color}} src={duck_img}></img>
+                        <img className="siMainPic" style={{borderTopColor: item.color}} src={require("../"+ images[0].path)}></img>
                     </div>
                     <div className="singleItemPictures">
-                        <div><img className="siPic" src={duck_img}></img></div>
-                        <div><img className="siPic" src={duck_img}></img></div>
-                        <div><img className="siPic" src={duck_img}></img></div>
+                        <div><img className="siPic" src={require("../"+ images[1].path)}></img></div>
+                        <div><img className="siPic" src={require("../"+ images[2].path)}></img></div>
+                        <div><img className="siPic" src={require("../"+ images[3].path)}></img></div>
                     </div>
                     <div className="singleItemText">
                         <p>{item.description}</p>

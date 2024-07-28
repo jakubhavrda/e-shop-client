@@ -2,30 +2,55 @@ import React, {Fragment, useState, useEffect} from "react";
 import Item from "./item";
 
 
-
 function ItemDiscover(props) {
     
     const [items, setItems] = useState([]);
+    const [mainImgs, setMainImgs] = useState([]);
+    const [queryMainImgs, setQueryMainImgs] = useState([]);
+    const [queryIsEmpty, setQueryIsEmpty] = useState(true);
     const [categories, setCategories] = useState([]);
     const [hidden, setHidden] = useState(false);
     const query = props.query;
-
+    const products = query.products;
     
     const checkQuery = () => {
-        if(query.length > 0){
+        if(products.length > 0){
             setHidden(true);
+            const images = query.images;
+            setQueryIsEmpty(false)
+            let imgArray = [];
+            images.forEach((image, index) => {
+                if(index % 4 === 0){
+                    imgArray.push(image)
+                } else if (index = 0) {
+                    imgArray.push(image)
+                };
+                index++; 
+            });
+            setQueryMainImgs(imgArray);
         } else {
             setHidden(false);
+            setQueryIsEmpty(true)
         };  
     };
-     
-    
-    
 
     const getItems = async() => {
-        const result = await fetch("http://localhost:4000/allProducts")
-        const data = await result.json()
-        setItems(data);
+        const result = await fetch("http://localhost:4000/allProducts");
+        const data = await result.json();
+        const images = data.images;
+
+        let imgArray = [];
+        images.forEach((image, index) => {
+            if(index % 4 === 0){
+                imgArray.push(image)
+            } else if (index = 0) {
+                imgArray.push(image)
+            };
+            index++; 
+        });
+
+        setMainImgs(imgArray.reverse());
+        setItems(data.products);
     };
 
     const getCategory = async() => {
@@ -37,19 +62,18 @@ function ItemDiscover(props) {
 
     useEffect(() => {
         getItems();
-        getCategory();
-        
+        getCategory();   
     },[]);
 
     useEffect(() => {
         checkQuery();
-    })
+    }, [query])
     
     return (
         <Fragment>
             
             <div hidden={!hidden} style={{margin: " 3rem 2rem",  display: "flex", flexWrap: "wrap", marginTop: "2rem"}}>
-                {query.map((item, index) => (
+                {products.map((item, index) => (
                     <Item 
                         id={item.id}
                         key={index}
@@ -59,7 +83,7 @@ function ItemDiscover(props) {
                         color={item.color}
                         hidden={true}
                         notInOrder={true}
-                        imgSource={{path: "images/products/duck3.png"}}
+                        imgSource={queryIsEmpty? {path: "images/products/duck3.png"} : queryMainImgs[index]} 
                         className="col-lg-3"
                         width="18rem"
                         height="26rem"
@@ -82,7 +106,7 @@ function ItemDiscover(props) {
                         amount={item.amount}
                         hidden={true}
                         notInOrder={true}
-                        imgSource={{path: "images/products/duck3.png"}}
+                        imgSource={mainImgs[index]}
                         className="col-lg-3"
                         width="18rem"
                         height="26rem"

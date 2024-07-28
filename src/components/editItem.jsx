@@ -29,7 +29,7 @@ const EditItem = (props) => {
                 body: JSON.stringify(body),
             });
             console.log(result);
-            window.location ="/";
+            window.location ="/admin";
         } catch (err) {
             console.error(err);
         };
@@ -76,7 +76,7 @@ const EditItem = (props) => {
                     <label>Color</label>
                     <input type="text" className="form-control border-danger" value={color} onChange={e => {setColor(e.target.value)}}/>
                     <label className="form-label">Description, maximum of 700 characters</label>
-                    <textarea maxLength="300" rows="10" className="form-control border-danger" value={description} onChange={e => setDescription(e.target.value)}></textarea>
+                    <textarea maxLength="700" rows="10" className="form-control border-danger" value={description} onChange={e => setDescription(e.target.value)}></textarea>
                   </div>
 
                   <div className="modal-footer">

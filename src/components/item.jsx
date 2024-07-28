@@ -9,8 +9,6 @@ function Item(props){
   const { itemId } = useParams(props.id);
   const { category } = useParams(props.category);
 
-  console.log(props.imgSource)
-
   const [itemAmount, setAmount] = useState(props.amount);
   const addAmount = () => { 
     if(itemAmount === props.in_stock){

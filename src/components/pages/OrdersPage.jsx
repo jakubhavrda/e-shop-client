@@ -40,7 +40,7 @@ function OrdersPage(props) {
 
     return (
         <Fragment>
-            <a href="/"><img src={logo} className="my-4" style={{width: "40%" }} alt="DAMP"/></a>
+            <a href="/"><img src={logo} className="my-4" style={{width: "10rem" }} alt="DAMP"/></a>
                     
             {order.map((x) => (
                 <div>

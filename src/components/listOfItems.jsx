@@ -12,9 +12,8 @@ function ListOfItems(){
         const result = await fetch("http://localhost:4000/");
         const data = await result.json();
         const images = data.images;
-        setMainImgs([images[0], images[4], images[8]]);
+        setMainImgs([images[8], images[4], images[0]]);
         setItems(data.products);
-        console.log(mainImgs[0]);
     };
 
  

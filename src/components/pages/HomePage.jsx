@@ -8,7 +8,7 @@ function HomePage(props) {
     const user = props.user;
     const order = props.order;
 
-    const [arrayQuery, setArrayQuery] = useState([]);
+    const [arrayQuery, setArrayQuery] = useState({products: [], images: []});
     const [hidden, setHidden] = useState(true);
 
     const getQuery = (query) => {
@@ -16,7 +16,8 @@ function HomePage(props) {
     };
 
     const checkQuery = () => {
-        if(arrayQuery.length > 0){
+        const products = arrayQuery.products;
+        if(products.length > 0){
             setHidden(false);
         } else {
             setHidden(true)
@@ -33,10 +34,9 @@ function HomePage(props) {
             <Searchbar user={user} getQuery={getQuery}/>
             <div hidden={hidden}>
                 <ItemDiscover query={arrayQuery}/>
-            </div>
-            
+            </div> 
             <ListOfItems />
-            <ItemDiscover query={[]}/>
+            <ItemDiscover query={{products: [], images: []}}/>
         </Fragment>
     )
 };
