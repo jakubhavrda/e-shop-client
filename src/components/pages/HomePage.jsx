@@ -17,8 +17,8 @@ function HomePage(props) {
 
     const checkQuery = () => {
         const products = arrayQuery.products;
-        if(products.length > 0){
-            setHidden(false);
+        if(products.length > 0){  
+          setHidden(false);
         } else {
             setHidden(true)
         }

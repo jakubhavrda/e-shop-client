@@ -9,8 +9,6 @@ function OneItem(props) {
     const [images, setImages] = useState([]);
     const params = useParams();
     const order = props.order;
-    console.log(order);
-    console.log(item);
 
     const getSingleItem = async() => {
         const result = await fetch(`http://localhost:4000/discover/${params.category}/${params.itemId}`);
@@ -19,12 +17,10 @@ function OneItem(props) {
         setImages(data.images);
     };
 
-
-
     const createOrder = async() => {
         try {
             let list_of_items = [];
-            if(!order) {
+            if(order.length === 0) {
                list_of_items = item;
             } else {
                 order[0].list_of_items.push(item[0]);
@@ -32,13 +28,13 @@ function OneItem(props) {
             }
             const user_id = props.user.id;  
             const body = {list_of_items, user_id};
+            console.log(body);
             const response = await fetch("http://localhost:4000/createOrEditOrder", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(body)
               });
-            const parseRes = await response.json();
-            console.log(parseRes);     
+            const parseRes = await response.json();    
         } catch (err) {
           console.error(err.message);
         }

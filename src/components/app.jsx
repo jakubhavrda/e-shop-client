@@ -24,25 +24,23 @@ const App = () => {
     });
 
     const [admin, setAdmin] = useState(false);
-    const [order, setOrder] = useState([]); 
+    const [order, setOrder] = useState([]);
+    
+    
+    //// GET ORDER ////
 
-    const getOrder = async() => {
-      const user_id = user.id;
-      const body = {user_id};
-      if(user_id === "") {
+    const getOrder = async(user) => {
+      if(user.id === "") {
         setOrder([]);
       } else {
-        const response = await fetch("http://localhost:4000/orderByUser", {
-          method: "POST",
-          headers: {"Content-Type": "Application/json"},
-          body: JSON.stringify(body)
-        });
+        const response = await fetch(`http://localhost:4000/orderByUser/${user.id}`);
         const parseRes = await response.json();
-        localStorage.setItem('order', JSON.stringify(parseRes));
-        setOrder(JSON.parse(localStorage.getItem('order')));
-        console.log(order);
+        localStorage.setItem("order", JSON.stringify(parseRes));
+        setOrder(JSON.parse(localStorage.getItem("order")));
       }
     };
+
+    //// EDIT ORDER ////
 
     const editOrder = async(x) => {
       const order_id = order[0].order_id
@@ -61,40 +59,47 @@ const App = () => {
           body: JSON.stringify(toBack)
         });
         const parseRes = await response.json();
-        localStorage.setItem('order', JSON.stringify(parseRes));
-        setOrder(JSON.parse(localStorage.getItem('order')));
+        setOrder(parseRes);
         
       } else{
 
         const itemToEdit = order[0].list_of_items.filter(item => item.id === x.id);
-        itemToEdit[0].amount = x.amount
+        itemToEdit[0].amount = x.amount;
+
         const number = order.length;
         const list_of_items = order[0].list_of_items;
         const toBack = {number, order_id, list_of_items}
+
         let total_price = 0;
         order[0].list_of_items.forEach(item => {
           total_price += (item.price*item.amount)
         });
         order[0].total_price = total_price;
         setOrder(order);
+
+
         const response = await fetch("http://localhost:4000/order/edit", {
           method: "POST",
           headers: {"Content-Type": "application/json"},
           body: JSON.stringify(toBack)
         });
         const parseRes = await response.json();
-        localStorage.setItem('order', JSON.stringify(parseRes));
-        setOrder(JSON.parse(localStorage.getItem('order')));
+        console.log(parseRes);
+        setOrder(parseRes);
       };
-      // reload on orders page! dunno what else!
+
       if(window.location.href === `http://localhost:3000/order/${user.id}/${order[0].order_id}`){
         window.location = `http://localhost:3000/order/${user.id}/${order[0].order_id}`;
       }; 
     };
 
+    //// SET AUTH ////
+
     const setAuth = (boolean) => {
       setIsAuthenticated(boolean);
     };
+
+    //// IS AUTH ////
 
     async function isAuth() {
         try {
@@ -110,6 +115,8 @@ const App = () => {
         }
       };
 
+      //// GET USER ////
+
       const getUser = async() => {
           try {
             const response = await fetch("http://localhost:4000/dashboard/", {
@@ -122,8 +129,10 @@ const App = () => {
              setAdmin(false)
             } else {
              setAdmin(parseRes.admin)
-             setUser({id: parseRes.user_id, name: parseRes.user_name, email: parseRes.user_email});
-             setOrder(JSON.parse(localStorage.getItem("order")));
+             localStorage.setItem("user", JSON.stringify({id: parseRes.user_id, name: parseRes.user_name, email: parseRes.user_email}));
+             setUser(JSON.parse(localStorage.getItem("user")));
+
+             getOrder(JSON.parse(localStorage.getItem("user"))); // with code like this order changes with user!
             };
             
           } catch (err) {
@@ -135,8 +144,7 @@ const App = () => {
       useEffect(() => {
         isAuth();
         getUser();
-        getOrder();
-        isAuth();
+        
       }, []);
 
     

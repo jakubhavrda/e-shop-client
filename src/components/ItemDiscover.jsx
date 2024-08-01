@@ -11,9 +11,11 @@ function ItemDiscover(props) {
     const [categories, setCategories] = useState([]);
     const [hidden, setHidden] = useState(false);
     const query = props.query;
-    const products = query.products;
+    const [products, setProducts] = useState([]);
+    
     
     const checkQuery = () => {
+        setProducts(query.products);
         if(products.length > 0){
             setHidden(true);
             const images = query.images;

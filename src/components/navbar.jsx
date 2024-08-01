@@ -5,9 +5,10 @@ import "../styles.css"
 function Navbar(props){
     const user = props.user;
     const order = props.order;
+    const orderData = order.order;
     const [hidden, setHidden] = useState(true);
     const name = user.name;
-    console.log(order);
+    /// lots of errors here!
 
     const mouseOn = async() => {
      if(!user){
@@ -21,22 +22,21 @@ function Navbar(props){
     const checkOrder = () => {
       if(order.length === 0){
         return (<p className="my-5">Order is Empty</p>)
-      } else if(order[0].list_of_items.length === 0){
+      } else if(orderData[0].list_of_items.length === 0){
         return (<p className="my-5">Order is Empty</p>)
-      } else if (order[0].user_id !== user.id){
+      } else if (orderData[0].user_id !== user.id){
         return (<p className="my-5">Order is Empty</p>)
       } else {
-        
-       
+        const mainImgs = order.mainImgs;
 
         return (
           <div className="d-flex flex-column-reverse align-items-center ">
             <div>
-              <h5 className="text-danger">total: {order[0].total_price} CZK</h5>
+              <h5 className="text-danger">total: {orderData[0].total_price} CZK</h5>
               <a href="/myOrder"><h5 className="my-3 btn btn-success">Finish Order!</h5></a>
             </div>
             
-            {order[0].list_of_items.map((item, index) => (
+            {orderData[0].list_of_items.map((item, index) => (
               <div className="my-3">
                 <Item
                   key={index}
@@ -48,11 +48,12 @@ function Navbar(props){
                   amount={item.amount}
                   in_stock={item.in_stock}
                   editOrder={props.editOrder}
+                  imgSource={mainImgs[index]}
                   notInOrder={false}
                   hidden={false}
-                  width="12rem"
-                  height="19rem"
-                  imgHeight="11rem"
+                  width="13rem"
+                  height="21rem"
+                  imgHeight="13rem"
                 />
               </div>
             ))}

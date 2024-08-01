@@ -4,7 +4,7 @@ import React, { Fragment, useEffect, useState } from "react";
 function Searchbar(props){
     const [hidden, setHidden] = useState(false);
     const [query, setQuery] = useState("");
-    const [arrayQuery, setArrayQuery] = useState([]);
+    const [arrayQuery, setArrayQuery] = useState({products: [], images: []});
     const [text404, setText404] = useState("");
 
     const [categories, setCategories] = useState([]);
@@ -69,7 +69,7 @@ function Searchbar(props){
             const params = e.target.value;
             const result = await fetch(`http://localhost:4000/searchbar/${params}`);
             const data = await result.json()
-            props.getQuery(data); // data.products /quick fix/
+            props.getQuery(data);
         } catch (err) {
             console.error(err);
         }
@@ -81,7 +81,7 @@ function Searchbar(props){
     useEffect(() => {
         checkUser();
         getCategory();
-    });
+    }, [user]);
 
 
    
@@ -100,8 +100,8 @@ function Searchbar(props){
                 </div>
                 
                 <div id="searchbarCategories">
-                    {categories.map((category) => (
-                        <div>
+                    {categories.map((category, index) => (
+                        <div key={index}>
                             <button className="me-3 btn text-secondary" value={category.category} onClick={e => categoryClick(e)} name={category.category}>{category.category}</button>
                         </div>
                     ))}
