@@ -9,6 +9,10 @@ function OneItem(props) {
     const [images, setImages] = useState([]);
     const params = useParams();
     const order = props.order;
+    const [mainImg, setMainImg] = useState(0);
+    const [otherImgs, setOtherImgs] = useState([1,2,3]);
+    console.log(otherImgs);
+    
 
     const getSingleItem = async() => {
         const result = await fetch(`http://localhost:4000/discover/${params.category}/${params.itemId}`);
@@ -40,6 +44,20 @@ function OneItem(props) {
         }
       };
 
+      const changeImage = (index) => {
+        let numbers = [1,2,3]
+        let imgArray = [];
+        numbers.forEach((num) => {
+            if(num === index){
+                imgArray.push(0);    
+            } else {
+                imgArray.push(num);
+            };
+        });
+        setMainImg(index);
+        setOtherImgs(imgArray);
+      }; 
+
 
 
 
@@ -57,12 +75,12 @@ function OneItem(props) {
                         <h1>{item.name}</h1>
                         <h3 style={{color: "#ff0800"}}>{item.price} CZK</h3>
                         <p>{item.category}</p>
-                        <img className="siMainPic" style={{borderTopColor: item.color}} src={require("../"+ images[0].path)}></img>
+                        <img className="siMainPic" style={{borderTopColor: item.color}} src={require("../"+ images[mainImg].path)}></img>
                     </div>
                     <div className="singleItemPictures">
-                        <div><img className="siPic" src={require("../"+ images[1].path)}></img></div>
-                        <div><img className="siPic" src={require("../"+ images[2].path)}></img></div>
-                        <div><img className="siPic" src={require("../"+ images[3].path)}></img></div>
+                        <div onClick={e => changeImage(otherImgs[0])}><img className="siPic" src={require("../"+ images[otherImgs[0]].path)}></img></div>
+                        <div onClick={e => changeImage(otherImgs[1])}><img className="siPic" src={require("../"+ images[otherImgs[1]].path)}></img></div>
+                        <div onClick={e => changeImage(otherImgs[2])}><img className="siPic" src={require("../"+ images[otherImgs[2]].path)}></img></div>
                     </div>
                     <div className="singleItemText">
                         <p>{item.description}</p>

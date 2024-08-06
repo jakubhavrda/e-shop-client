@@ -24,7 +24,7 @@ const App = () => {
     });
 
     const [admin, setAdmin] = useState(false);
-    const [order, setOrder] = useState([]);
+    const [order, setOrder] = useState({order: [], mainImgs: []});
     
     
     //// GET ORDER ////
@@ -42,55 +42,48 @@ const App = () => {
 
     //// EDIT ORDER ////
 
-    const editOrder = async(x) => {
-      const order_id = order[0].order_id
+    const editOrder = async(x) => { /// order on navbar is undefined on editOrder
+      const localStorageOrder = JSON.parse(localStorage.getItem("order"));
+      const localOrder = localStorageOrder.order
+      const order_id = localOrder[0].order_id
+      console.log(x);
+      
      
       if(x.amount < 1){
-        
-        const removedItem = order[0].list_of_items.filter(item => item.id !== x.id);
-        order[0].list_of_items = removedItem;
-        const list_of_items = order[0].list_of_items;
+        const removedItem = localOrder[0].list_of_items.filter(item => item.id !== x.id);
+        localOrder[0].list_of_items = removedItem;
+        const list_of_items = localOrder[0].list_of_items;
         const number = list_of_items.length;
         const toBack = {number, order_id, list_of_items};
-        setOrder(order);
-        const response = await fetch("http://localhost:4000/order/edit",{ 
+        await fetch("http://localhost:4000/order/edit",{ 
           method: "POST",
           headers: {"Content-Type": "application/json"},
           body: JSON.stringify(toBack)
         });
-        const parseRes = await response.json();
-        setOrder(parseRes);
-        
       } else{
-
-        const itemToEdit = order[0].list_of_items.filter(item => item.id === x.id);
+        const itemToEdit = localOrder[0].list_of_items.filter(item => item.id === x.id);
         itemToEdit[0].amount = x.amount;
 
-        const number = order.length;
-        const list_of_items = order[0].list_of_items;
+        const number = localOrder.length;
+        const list_of_items = localOrder[0].list_of_items;
         const toBack = {number, order_id, list_of_items}
 
         let total_price = 0;
-        order[0].list_of_items.forEach(item => {
+        localOrder[0].list_of_items.forEach(item => {
           total_price += (item.price*item.amount)
         });
-        order[0].total_price = total_price;
-        setOrder(order);
+        localOrder[0].total_price = total_price;
 
-
-        const response = await fetch("http://localhost:4000/order/edit", {
+        await fetch("http://localhost:4000/order/edit", {
           method: "POST",
           headers: {"Content-Type": "application/json"},
           body: JSON.stringify(toBack)
         });
-        const parseRes = await response.json();
-        console.log(parseRes);
-        setOrder(parseRes);
       };
 
-      if(window.location.href === `http://localhost:3000/order/${user.id}/${order[0].order_id}`){
-        window.location = `http://localhost:3000/order/${user.id}/${order[0].order_id}`;
-      }; 
+      if(window.location.href === `http://localhost:3000/order/${user.id}/${order_id}`){
+        window.location = `http://localhost:3000/order/${user.id}/${order_id}`;
+      }
     };
 
     //// SET AUTH ////

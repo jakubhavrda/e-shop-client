@@ -4,11 +4,11 @@ import Item from "./item";
 import "../styles.css"
 function Navbar(props){
     const user = props.user;
-    const order = props.order;
-    const orderData = order.order;
+    const orderData = props.order;
+    const order = orderData.order;
     const [hidden, setHidden] = useState(true);
     const name = user.name;
-    /// lots of errors here!
+    
 
     const mouseOn = async() => {
      if(!user){
@@ -22,26 +22,25 @@ function Navbar(props){
     const checkOrder = () => {
       if(order.length === 0){
         return (<p className="my-5">Order is Empty</p>)
-      } else if(orderData[0].list_of_items.length === 0){
+      } else if(order[0].list_of_items.length === 0){ 
         return (<p className="my-5">Order is Empty</p>)
-      } else if (orderData[0].user_id !== user.id){
+      } else if (order[0].user_id !== user.id){
         return (<p className="my-5">Order is Empty</p>)
       } else {
-        const mainImgs = order.mainImgs;
-
+        const mainImgs = orderData.mainImgs 
         return (
           <div className="d-flex flex-column-reverse align-items-center ">
             <div>
-              <h5 className="text-danger">total: {orderData[0].total_price} CZK</h5>
+              <h5 className="text-danger">total: {order[0].total_price} CZK</h5>
               <a href="/myOrder"><h5 className="my-3 btn btn-success">Finish Order!</h5></a>
             </div>
             
-            {orderData[0].list_of_items.map((item, index) => (
+            {order[0].list_of_items.map((item, index) => (
               <div className="my-3">
                 <Item
                   key={index}
                   id={item.id}
-                  name={item.name.substring(0,9)+ "..."}
+                  name={item.name.substring(0,9) + "..."}
                   price={item.price}
                   category={item.category}
                   color={item.color}
@@ -91,8 +90,8 @@ function Navbar(props){
               </div>
             </nav>
             
-              <div hidden={hidden} className="hiddenDiv" >
-                <h6 className="mt-3"><a href="/myOrder">My Cart!</a></h6>
+              <div hidden={hidden} className="hiddenDiv">
+                <h6 className="mt-3">My Cart!</h6>
                 {checkOrder()}
               </div>
             
