@@ -11,6 +11,7 @@ import Register from "./pages/Register";
 import ProfilePage from "./pages/ProfilePage";
 import OrdersPage from "./pages/OrdersPage";
 import AdminOrders from "./pages/AdminOrders";
+import CheckoutPage from "./pages/CheckoutPage";
 
 
 const App = () => {
@@ -20,7 +21,8 @@ const App = () => {
     const [user, setUser] = useState({
       id: "",
       name: "",
-      email: ""
+      email: "",
+      dateOfBirth: ""
     });
 
     const [admin, setAdmin] = useState(false);
@@ -42,7 +44,7 @@ const App = () => {
 
     //// EDIT ORDER ////
 
-    const editOrder = async(x) => { /// order on navbar is undefined on editOrder
+    const editOrder = async(x) => { 
       const localStorageOrder = JSON.parse(localStorage.getItem("order"));
       const localOrder = localStorageOrder.order
       const order_id = localOrder[0].order_id
@@ -116,13 +118,14 @@ const App = () => {
              method: "GET",
              headers: { token: localStorage.token }
             });
-            const parseRes = await response.json(); 
+            const parseRes = await response.json();
+             
             if(parseRes === "Not Authorize"){
-             setUser({id: "", name: "", email: ""})
+             setUser({id: "", name: "", email: "", dateOfBirth: ""})
              setAdmin(false)
             } else {
              setAdmin(parseRes.admin)
-             localStorage.setItem("user", JSON.stringify({id: parseRes.user_id, name: parseRes.user_name, email: parseRes.user_email}));
+             localStorage.setItem("user", JSON.stringify({id: parseRes.user_id, name: parseRes.user_name, email: parseRes.user_email, dateOfBirth: parseRes.date_of_birth}));
              setUser(JSON.parse(localStorage.getItem("user")));
 
              getOrder(JSON.parse(localStorage.getItem("user"))); // with code like this order changes with user!
@@ -153,11 +156,13 @@ const App = () => {
                 <Route exact path="/admin/orders" element={admin ? <AdminOrders user={user}/> : <NotFoundPage />}/>
                 <Route exact path="/discover/:category/:itemId" element={<SingleItemPage user={user} order={order} editOrder={editOrder}/>} />
                 <Route exact path="/order/:user_id/:order_id" element={<OrdersPage user={user} editOrder={editOrder}/>} />
+                <Route exact path="/checkout" element={isAuthenticated ? <CheckoutPage user={user} order={order}/> : <NotFoundPage />} />
                 <Route path="*" element={<NotFoundPage />} />
 
                 <Route exact path="/login" element={ !isAuthenticated ? <LoginPage setAuth={setAuth} /> : <Navigate to="/profile" /> } />
                 <Route exact path="/register" element={ !isAuthenticated ? <Register setAuth={setAuth}/> : <Navigate to="/login" /> } />
                 <Route exact path="/profile" element={  isAuthenticated ? <ProfilePage setAuth={setAuth} getUser={getUser} user={user} admin={admin} /> : <Navigate to="/login" /> } />
+                
            </Routes>
         </BrowserRouter> 
     )

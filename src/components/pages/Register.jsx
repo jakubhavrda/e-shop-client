@@ -9,10 +9,11 @@ function Register({ setAuth }) {
     const [inputs, setInputs] = useState({
         email: "",
         name: "",
-        password: ""
+        password: "",
+        dateOfBirth: ""
     });
 
-    const {email, name, password} = inputs;
+    const {email, name, password, dateOfBirth} = inputs;
 
     const onChange = (e) => {
         setInputs({ ...inputs, [e.target.name] : e.target.value});
@@ -21,7 +22,8 @@ function Register({ setAuth }) {
     const onSubmit = async(e) => {
         e.preventDefault();
         try {
-            const body = { name, email, password };
+            const body = { name, email, password, dateOfBirth };
+            
             const response = await fetch("http://localhost:4000/auth/register", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
@@ -63,11 +65,10 @@ function Register({ setAuth }) {
                 <div className="col-md-6">
                     <label className="mt-3 form-label">Password: </label>
                     <input type="password" name="password" value={password} onChange={e => onChange(e)} className="form-control border-success"/>
-                    
                 </div>
                 <div className="col-md-6">
                     <label className="mt-3 form-label">Date of Birth:</label>
-                    <input type="date" name="password" value="" className="form-control border-success"/>
+                    <input type="date" name="dateOfBirth" value={dateOfBirth} onChange={e => onChange(e)} className="form-control border-success"/>
                 </div>
                 
                 <div className="my-5">

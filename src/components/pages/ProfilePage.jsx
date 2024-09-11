@@ -7,14 +7,47 @@ function ProfilePage (props) {
     
     const user = props.user;
     
+    
     const [prevOrders, setPrevOrders] = useState([]);
     const [hidden, setHidden] = useState(false);
+    const [heading, setHeading] = useState(<h1 className="my-5">Welcome, {user.name} !</h1>)
     
     function logout(e) {
         e.preventDefault();
         localStorage.removeItem("token");
         props.setAuth(false);
     };
+
+    const checkBirthday = () => {
+        const today = new Date();
+        let month = today.getMonth() + 1;
+        let day = today.getDate();
+        let year = today.getFullYear();
+        if(day < 10){
+            day = "0" + day 
+        }
+        if(month < 10){
+            month = "0" + month
+        }
+        const dayAndMonth = `${month}-${day}`;
+        const usersDayAndMonth = user.dateOfBirth.substring(5,10);
+        const usersYear = Number(user.dateOfBirth.substring(0,4));
+        let age = `${year - usersYear}`;
+        if(age.slice(-1) === "1"){
+            age = age + "st"
+        } else if(age.slice(-1) === "2"){
+            age = age + "nd"
+        } else if(age.slice(-1) === "3"){
+            age = age + "rd"
+        } else {
+            age = age + "th"
+        }
+        if(usersDayAndMonth == dayAndMonth){
+            setHeading(<h1 className="my-5 text-danger"><i className="fa-solid fa-cake-candles " /> Happy {age} Birthday, {user.name} <i className="fa-solid fa-cake-candles" /></h1>)
+        } else {
+            setHeading(<h1 className="my-5">Welcome, {user.name} !</h1>)
+        }
+    }
 
     const getPrevOrders = async(id) => {
         try {
@@ -50,13 +83,14 @@ function ProfilePage (props) {
     useEffect(() => {   
         props.getUser();
         getPrevOrders(user.id);
+        checkBirthday();
     }, [user.id, ""]); // <------- checks if user.id and "" are different so if yes then run, works nicely
 
     return (
         <Fragment>
             <a href="/"><img src={logo} className="mt-5" style={{width: "8rem" }} alt="&& logo"/></a>
             
-            <h1 className="my-5">Welcome, {user.name} !</h1>
+            {heading}
             
 
             <div className="flex-profile" >
@@ -65,6 +99,7 @@ function ProfilePage (props) {
                     <Link hidden={!props.admin} className="text-danger mt-5" to="/admin">! Click here for Admin Page !</Link>
                     <h6 className="mt-3">user_name: <u className="text-success">{user.name}</u></h6>
                     <h6>email: <u className="text-success">{user.email}</u></h6>
+                    <h6>date of birth: <u className="text-success">{user.dateOfBirth}</u></h6>
                     
                     <button onClick={e => logout(e)} className="btn btn-outline-danger">Logout</button>
                 </div>

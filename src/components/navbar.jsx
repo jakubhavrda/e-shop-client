@@ -32,7 +32,7 @@ function Navbar(props){
           <div className="d-flex flex-column-reverse align-items-center ">
             <div>
               <h5 className="text-danger">total: {order[0].total_price} CZK</h5>
-              <a href="/myOrder"><h5 className="my-3 btn btn-success">Finish Order!</h5></a>
+              <a href="/checkout"><h5 className="my-3 btn btn-warning">Finish Order!</h5></a>
             </div>
             
             {order[0].list_of_items.map((item, index) => (
@@ -91,7 +91,7 @@ function Navbar(props){
             </nav>
             
               <div hidden={hidden} className="hiddenDiv">
-                <h6 className="mt-3">My Cart!</h6>
+                <a href="/checkout"><h4 className="my-3">My Cart!</h4></a>
                 {checkOrder()}
               </div>
             

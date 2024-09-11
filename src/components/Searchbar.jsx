@@ -10,8 +10,7 @@ function Searchbar(props){
     const [categories, setCategories] = useState([]);
     
     const user = props.user;
-
-
+    
     function checkUser() {
        if(user.name === ""){
         setHidden(false)
@@ -19,10 +18,6 @@ function Searchbar(props){
         setHidden(true)
         }; 
     };
-
-    function capitalizeFirstLetter() {
-        return query.charAt(0).toUpperCase() + query.slice(1).toLowerCase();
-    }
 
     
     const queryFunction = async(e) => {
@@ -34,14 +29,11 @@ function Searchbar(props){
             } else if(query === " "){
                 setArrayQuery({products: [], images: []});
             } else {
-                const body = {name: "%" + capitalizeFirstLetter() + "%"}
-                const response = await fetch("http://localhost:4000/searchbar", {
-                    method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify(body)
-                });
-
+                const name = query.charAt(0).toUpperCase() + query.slice(1).toLowerCase();
+                
+                const response = await fetch(`http://localhost:4000/searchbar/${name}`);
                 const data = await response.json();
+                
                 if(data.length === 0){
                     setText404("No items were found!");
                 } else {
@@ -67,7 +59,7 @@ function Searchbar(props){
         e.preventDefault();
         try {
             const params = e.target.value;
-            const result = await fetch(`http://localhost:4000/searchbar/${params}`);
+            const result = await fetch(`http://localhost:4000/searchbar/click/${params}`);
             const data = await result.json()
             props.getQuery(data);
         } catch (err) {

@@ -58,7 +58,8 @@ function OrdersPage(props) {
                     <h1>Order n.{x.order_id}</h1>
                     <h4>Total: <span className="text-danger">{x.total_price} kč</span></h4>                   
                     <p>paid: {x.paid? "✔" : "❌"}</p>
-                    <p className="mb-5">complete: {x.complete? "✔" : "❌"}</p>
+                    <p>complete: {x.complete? "✔" : "❌"}</p>
+                    <a hidden={authorizeOrder()} href="/checkout"><button className="btn btn-lg btn-warning mb-5">Finish Order</button></a>
 
                     <div className="row justify-content-center">
                          {x.list_of_items.map((item, index) => (
