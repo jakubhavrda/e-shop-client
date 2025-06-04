@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import { useParams } from "react-router-dom";
-import duck_img from "../images/products/duck3.png";
 
 
 
@@ -35,7 +34,7 @@ function Item(props){
               <div>
                 <h4 className="card-title">{props.name}</h4>
                 <h6 className="cart-subtitle">{props.category}</h6>
-                <h3 className="card-title">{props.price} kč</h3>
+                <h3 className="card-title">{props.price} CZK</h3>
               </div>
               <div className="text-center">
                 <h6 onClick={addAmount} hidden={props.hidden} className="border border-dark bg-light p-1 m-0">+</h6>
