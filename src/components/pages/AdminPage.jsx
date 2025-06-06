@@ -1,9 +1,9 @@
-import React, { Fragment, useState, useEffect } from "react";
-import AllItems from "../allItems";
+import { Fragment, useState, useEffect } from "react";
+import AllItems from "../AllItems";
 import Categories from "../Categories";
 import logo from "../../images/logo.png";
 
-function AdminPage({user}) {
+function AdminPage() {
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
     const [category, setCategory] = useState("X");
@@ -75,7 +75,7 @@ function AdminPage({user}) {
                 <a href="/admin/orders"><button>Manage Orders</button></a>
             </div>
             <form method="POST" action="/admin/create"
-                enctype="multipart/form-data"
+                encType="multipart/form-data"
                 style={{ margin: "2rem", border: "solid 2px", padding: "1rem"}}
                 onSubmit={createItem}>
             

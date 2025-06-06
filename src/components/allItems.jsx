@@ -1,5 +1,5 @@
-import React, { Fragment, useEffect, useState } from "react";
-import EditItem from "./editItem";
+import { Fragment, useEffect, useState } from "react";
+import EditItem from "./EditItem";
 
 
 function AllItems() {
@@ -35,8 +35,8 @@ function AllItems() {
         <Fragment>
         <div className="allItems">
             {items.map((item, index) => (
-                <div style={{margin: "2rem", border: "solid 2px", padding: "1rem"}}>
-                    <p key={index}>id: {item.id}</p>
+                <div style={{margin: "2rem", border: "solid 2px", padding: "1rem"}} key={index}>
+                    <p>id: {item.id}</p>
                     <h4>Name: {item.name}</h4>
                     <p>Category: {item.category}</p>
                     <h5>Price: {item.price} CZK</h5>

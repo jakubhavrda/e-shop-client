@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "./app"
 import duck2 from "../images/duck2.png";
-import Item from "./item";
+import Item from "./Item";
 import "../styles.css"
+
 function Navbar(props){
-    const user = props.user;
+    const {user} = useContext(UserContext);
+    console.log("user in navbar", user);
+    // try to implement:  "&&"" -- somewhere in the code
     const orderData = props.order;
     const order = orderData.order;
     const [hidden, setHidden] = useState(true);
     const name = user.name;
-    
 
     const mouseOn = async() => {
      if(!user){
@@ -61,7 +64,7 @@ function Navbar(props){
           );
       }
     }
-    
+
     return(
         <div className="header">
             <nav className="navbar navbar-expand-lg">

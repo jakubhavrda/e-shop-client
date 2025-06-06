@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
-import Navbar from "../navbar";
-import ListOfItems from "../listOfItems";
+import Navbar from "../Navbar";
+import ListOfItems from "../ListOfItems";
 import Searchbar from "../Searchbar";
 import ItemDiscover from "../ItemDiscover";
 
@@ -30,8 +30,8 @@ function HomePage(props) {
 
     return(
         <Fragment>
-            <Navbar user={user} order={order} editOrder={props.editOrder}/>
-            <Searchbar user={user} getQuery={getQuery}/>
+            <Navbar order={order} editOrder={props.editOrder}/>
+            <Searchbar getQuery={getQuery}/>
             <div hidden={hidden}>
                 <ItemDiscover query={arrayQuery}/>
             </div> 

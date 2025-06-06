@@ -1,5 +1,5 @@
 import React, {Fragment, useState, useEffect} from "react";
-import Item from "./item";
+import Item from "./Item";
 
 
 function ItemDiscover(props) {

@@ -1,21 +1,14 @@
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import OneItem from "../OneItem";
-import Navbar from "../navbar";
-
-
+import Navbar from "../Navbar";
 
 function SingleItemPage(props) {
-    const user = props.user;
-    return (
-        <Fragment>  
-                <Navbar user={user} order={props.order} editOrder={props.editOrder}/> 
-                <OneItem user={user} order={props.order}/>   
-        </Fragment>
-        
-    )
-};
+  return (
+    <Fragment>
+      <Navbar order={props.order} editOrder={props.editOrder} />
+      <OneItem order={props.order} />
+    </Fragment>
+  );
+}
 
 export default SingleItemPage;
-
-
-

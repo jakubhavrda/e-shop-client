@@ -5,7 +5,7 @@ import dpdLogo from "../../images/dpd.png";
 import balikovnaLogo from "../../images/balikova.jpg";
 import bankTransfer from "../../images/bankTransfer.png";
 import cardProviders from "../../images/cardProviders.png";
-import Item from "../item";
+import Item from "../Item";
 import { ToastContainer, toast } from "react-toastify";
 
 

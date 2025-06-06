@@ -1,4 +1,6 @@
-import React, { Fragment, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
+import { UserContext } from "./app";
+import "../styles.css";
 
 
 function Searchbar(props){
@@ -9,7 +11,7 @@ function Searchbar(props){
 
     const [categories, setCategories] = useState([]);
     
-    const user = props.user;
+    const user = useContext(UserContext);
     
     function checkUser() {
        if(user.name === ""){

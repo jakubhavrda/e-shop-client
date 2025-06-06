@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import Item from "./item";
+import Item from "./Item";
 import subImg from "../images/duck_sub_img.png"
 import duck_background from "../images/duck_background.png"
 

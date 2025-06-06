@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, createContext } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 import HomePage from "./pages/HomePage";
 import AdminPage from "./pages/AdminPage";
@@ -13,160 +13,236 @@ import OrdersPage from "./pages/OrdersPage";
 import AdminOrders from "./pages/AdminOrders";
 import CheckoutPage from "./pages/CheckoutPage";
 
+import Test from "./Test";
+
+const UserContext = createContext(null);
 
 const App = () => {
-    
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    const [user, setUser] = useState({
-      id: "",
-      name: "",
-      email: "",
-      dateOfBirth: ""
-    });
+  const [user, setUser] = useState({
+    id: "",
+    name: "",
+    email: "",
+    dateOfBirth: "",
+  });
 
-    const [admin, setAdmin] = useState(false);
-    const [order, setOrder] = useState({order: [], mainImgs: []});
-    
-    
-    //// GET ORDER ////
+  const [admin, setAdmin] = useState(false);
+  const [order, setOrder] = useState({ order: [], mainImgs: [] });
 
-    const getOrder = async(user) => {
-      if(user.id === "") {
-        setOrder([]);
+  //// GET ORDER ////
+
+  const getOrder = async (user) => {
+    if (user.id === "") {
+      setOrder([]);
+    } else {
+      const response = await fetch(
+        `http://localhost:4000/orderByUser/${user.id}`
+      );
+      const parseRes = await response.json();
+      localStorage.setItem("order", JSON.stringify(parseRes));
+      setOrder(JSON.parse(localStorage.getItem("order")));
+    }
+  };
+
+  //// EDIT ORDER ////
+
+  const editOrder = async (x) => {
+    const localStorageOrder = JSON.parse(localStorage.getItem("order"));
+    const localOrder = localStorageOrder.order;
+    const order_id = localOrder[0].order_id;
+    console.log(x);
+
+    if (x.amount < 1) {
+      const removedItem = localOrder[0].list_of_items.filter(
+        (item) => item.id !== x.id
+      );
+      localOrder[0].list_of_items = removedItem;
+      const list_of_items = localOrder[0].list_of_items;
+      const number = list_of_items.length;
+      const toBack = { number, order_id, list_of_items };
+      await fetch("http://localhost:4000/order/edit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(toBack),
+      });
+    } else {
+      const itemToEdit = localOrder[0].list_of_items.filter(
+        (item) => item.id === x.id
+      );
+      itemToEdit[0].amount = x.amount;
+
+      const number = localOrder.length;
+      const list_of_items = localOrder[0].list_of_items;
+      const toBack = { number, order_id, list_of_items };
+
+      let total_price = 0;
+      localOrder[0].list_of_items.forEach((item) => {
+        total_price += item.price * item.amount;
+      });
+      localOrder[0].total_price = total_price;
+
+      await fetch("http://localhost:4000/order/edit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(toBack),
+      });
+    }
+
+    if (
+      window.location.href ===
+      `http://localhost:3000/order/${user.id}/${order_id}`
+    ) {
+      window.location = `http://localhost:3000/order/${user.id}/${order_id}`;
+    }
+  };
+
+  //// SET AUTH ////
+
+  const setAuth = (boolean) => {
+    setIsAuthenticated(boolean);
+  };
+
+  //// IS AUTH ////
+
+  async function isAuth() {
+    try {
+      const response = await fetch("http://localhost:4000/auth/verify", {
+        method: "GET",
+        headers: { token: localStorage.token },
+      });
+      const parseRes = await response.json();
+
+      parseRes === true ? setIsAuthenticated(true) : setIsAuthenticated(false);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+
+  //// GET USER ////
+
+  const getUser = async () => {
+    try {
+      const response = await fetch("http://localhost:4000/dashboard/", {
+        method: "GET",
+        headers: { token: localStorage.token },
+      });
+      const parseRes = await response.json();
+
+      if (parseRes === "Not Authorize") {
+        setUser({ id: "", name: "", email: "", dateOfBirth: "" });
+        setAdmin(false);
       } else {
-        const response = await fetch(`http://localhost:4000/orderByUser/${user.id}`);
-        const parseRes = await response.json();
-        localStorage.setItem("order", JSON.stringify(parseRes));
-        setOrder(JSON.parse(localStorage.getItem("order")));
+        setAdmin(parseRes.admin);
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            id: parseRes.user_id,
+            name: parseRes.user_name,
+            email: parseRes.user_email,
+            dateOfBirth: parseRes.date_of_birth,
+          })
+        );
+        setUser(JSON.parse(localStorage.getItem("user")));
+
+        getOrder(JSON.parse(localStorage.getItem("user"))); // with code like this order changes with user!
       }
-    };
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
 
-    //// EDIT ORDER ////
+  useEffect(() => {
+    isAuth();
+    getUser();
+  }, []);
 
-    const editOrder = async(x) => { 
-      const localStorageOrder = JSON.parse(localStorage.getItem("order"));
-      const localOrder = localStorageOrder.order
-      const order_id = localOrder[0].order_id
-      console.log(x);
-      
-     
-      if(x.amount < 1){
-        const removedItem = localOrder[0].list_of_items.filter(item => item.id !== x.id);
-        localOrder[0].list_of_items = removedItem;
-        const list_of_items = localOrder[0].list_of_items;
-        const number = list_of_items.length;
-        const toBack = {number, order_id, list_of_items};
-        await fetch("http://localhost:4000/order/edit",{ 
-          method: "POST",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify(toBack)
-        });
-      } else{
-        const itemToEdit = localOrder[0].list_of_items.filter(item => item.id === x.id);
-        itemToEdit[0].amount = x.amount;
+  return (
+    <UserContext.Provider value={{ user }}>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={<HomePage order={order} editOrder={editOrder} />}
+          />
+          <Route
+            exact
+            path="/admin"
+            element={admin ? <AdminPage /> : <NotFoundPage />}
+          />
+          <Route
+            exact
+            path="/admin/orders"
+            element={admin ? <AdminOrders /> : <NotFoundPage />}
+          />
+          <Route
+            exact
+            path="/discover/:category/:itemId"
+            element={<SingleItemPage order={order} editOrder={editOrder} />}
+          />
+          <Route
+            exact
+            path="/order/:user_id/:order_id"
+            element={<OrdersPage user={user} editOrder={editOrder} />}
+          />
+          <Route
+            exact
+            path="/checkout"
+            element={
+              isAuthenticated ? (
+                <CheckoutPage user={user} order={order} />
+              ) : (
+                <NotFoundPage />
+              )
+            }
+          />
+          <Route path="*" element={<NotFoundPage />} />
 
-        const number = localOrder.length;
-        const list_of_items = localOrder[0].list_of_items;
-        const toBack = {number, order_id, list_of_items}
-
-        let total_price = 0;
-        localOrder[0].list_of_items.forEach(item => {
-          total_price += (item.price*item.amount)
-        });
-        localOrder[0].total_price = total_price;
-
-        await fetch("http://localhost:4000/order/edit", {
-          method: "POST",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify(toBack)
-        });
-      };
-
-      if(window.location.href === `http://localhost:3000/order/${user.id}/${order_id}`){
-        window.location = `http://localhost:3000/order/${user.id}/${order_id}`;
-      }
-    };
-
-    //// SET AUTH ////
-
-    const setAuth = (boolean) => {
-      setIsAuthenticated(boolean);
-    };
-
-    //// IS AUTH ////
-
-    async function isAuth() {
-        try {
-          const response = await fetch("http://localhost:4000/auth/verify",{
-            method: "GET",
-            headers: { token: localStorage.token }
-          });
-          const parseRes = await response.json();
-          
-          parseRes === true ? setIsAuthenticated(true) : setIsAuthenticated(false)
-        } catch (err) {
-          console.error(err.message)
-        }
-      };
-
-      //// GET USER ////
-
-      const getUser = async() => {
-          try {
-            const response = await fetch("http://localhost:4000/dashboard/", {
-             method: "GET",
-             headers: { token: localStorage.token }
-            });
-            const parseRes = await response.json();
-             
-            if(parseRes === "Not Authorize"){
-             setUser({id: "", name: "", email: "", dateOfBirth: ""})
-             setAdmin(false)
-            } else {
-             setAdmin(parseRes.admin)
-             localStorage.setItem("user", JSON.stringify({id: parseRes.user_id, name: parseRes.user_name, email: parseRes.user_email, dateOfBirth: parseRes.date_of_birth}));
-             setUser(JSON.parse(localStorage.getItem("user")));
-
-             getOrder(JSON.parse(localStorage.getItem("user"))); // with code like this order changes with user!
-            };
-            
-          } catch (err) {
-            console.error(err.message);
-          }
-      };
-
-    
-      useEffect(() => {
-        isAuth();
-        getUser();
-        
-      }, []);
-
-    
-    return(
-        <BrowserRouter>
-            <Routes>
-                <Route exact path="/" element={<HomePage 
-                                                user={user}
-                                                order={order}
-                                                editOrder={editOrder}
-                                              />} />
-                <Route exact path="/admin" element={admin ? <AdminPage user={user}/> : <NotFoundPage />}/>
-                <Route exact path="/admin/orders" element={admin ? <AdminOrders user={user}/> : <NotFoundPage />}/>
-                <Route exact path="/discover/:category/:itemId" element={<SingleItemPage user={user} order={order} editOrder={editOrder}/>} />
-                <Route exact path="/order/:user_id/:order_id" element={<OrdersPage user={user} editOrder={editOrder}/>} />
-                <Route exact path="/checkout" element={isAuthenticated ? <CheckoutPage user={user} order={order}/> : <NotFoundPage />} />
-                <Route path="*" element={<NotFoundPage />} />
-
-                <Route exact path="/login" element={ !isAuthenticated ? <LoginPage setAuth={setAuth} /> : <Navigate to="/profile" /> } />
-                <Route exact path="/register" element={ !isAuthenticated ? <Register setAuth={setAuth}/> : <Navigate to="/login" /> } />
-                <Route exact path="/profile" element={  isAuthenticated ? <ProfilePage setAuth={setAuth} getUser={getUser} user={user} admin={admin} /> : <Navigate to="/login" /> } />
-                
-           </Routes>
-        </BrowserRouter> 
-    )
+          <Route
+            exact
+            path="/login"
+            element={
+              !isAuthenticated ? (
+                <LoginPage setAuth={setAuth} />
+              ) : (
+                <Navigate to="/profile" />
+              )
+            }
+          />
+          <Route
+            exact
+            path="/register"
+            element={
+              !isAuthenticated ? (
+                <Register setAuth={setAuth} />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
+          <Route
+            exact
+            path="/profile"
+            element={
+              isAuthenticated ? (
+                <ProfilePage
+                  setAuth={setAuth}
+                  getUser={getUser}
+                  user={user}
+                  admin={admin}
+                />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
+          <Route exact path="/test" element={<Test />} />
+        </Routes>
+      </BrowserRouter>
+    </UserContext.Provider>
+  );
 };
 
-
 export default App;
+export { UserContext };
