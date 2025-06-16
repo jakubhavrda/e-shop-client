@@ -3,12 +3,12 @@ import { useParams } from "react-router-dom";
 import { UserContext } from "./app";
 import "../styles.css";
 
-function OneItem(props) {
+function OneItem() {
   const [item, setItem] = useState([]);
   const [images, setImages] = useState([]);
   const params = useParams();
 
-  const order = props.order;
+  const order = useContext(UserContext);
   const user_id = useContext(UserContext).user.id;
 
   const [mainImg, setMainImg] = useState(0);
@@ -67,7 +67,7 @@ function OneItem(props) {
     <Fragment>
       <hr />
       {item.map((item, index) => (
-        <div id={index} className="singleItemParent">
+        <div id={index} className="singleItemParent" key={index}>
           <div className="singleItemCard">
             <h1>{item.name}</h1>
             <h3 style={{ color: "#ff0800" }}>{item.price} CZK</h3>

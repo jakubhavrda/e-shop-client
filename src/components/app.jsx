@@ -158,14 +158,10 @@ const App = () => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user }}>
+    <UserContext.Provider value={{ user, order }}>
       <BrowserRouter>
         <Routes>
-          <Route
-            exact
-            path="/"
-            element={<HomePage order={order} editOrder={editOrder} />}
-          />
+          <Route exact path="/" element={<HomePage editOrder={editOrder} />} />
           <Route
             exact
             path="/admin"
@@ -179,7 +175,7 @@ const App = () => {
           <Route
             exact
             path="/discover/:category/:itemId"
-            element={<SingleItemPage order={order} editOrder={editOrder} />}
+            element={<SingleItemPage editOrder={editOrder} />}
           />
           <Route
             exact

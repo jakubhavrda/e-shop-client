@@ -5,8 +5,8 @@ import Navbar from "../Navbar";
 function SingleItemPage(props) {
   return (
     <Fragment>
-      <Navbar order={props.order} editOrder={props.editOrder} />
-      <OneItem order={props.order} />
+      <Navbar editOrder={props.editOrder} />
+      <OneItem />
     </Fragment>
   );
 }
